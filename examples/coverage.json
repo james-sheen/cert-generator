@@ -1,0 +1,28 @@
+{
+  "target": "https://bmc-a17.mfg.internal",
+  "walk_complete": true,
+  "absence_findings_withheld": false,
+  "counts": {
+    "declared": 4,
+    "matched": 3,
+    "reading": 3,
+    "present_not_reading": 0,
+    "declared_absent": 1,
+    "undeclared_present": 0,
+    "not_a_sensor": 0,
+    "unrecognised_type": 0,
+    "findings": 1,
+    "regressions": 1
+  },
+  "exit_code": 1,
+  "findings": [
+    {
+      "kind": "declared_absent",
+      "sensor": "Fan 3 Tach",
+      "detail": "declared by AspeedFan in the configuration and not reported by the machine at all",
+      "regression": true,
+      "declared_in": "/opt/entity-manager/configurations/reference-board.json",
+      "live_path": null
+    }
+  ]
+}

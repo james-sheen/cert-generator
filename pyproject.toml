@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cert-generator"
+# One home, read by the build backend. The sibling repository shipped a wheel
+# whose `__version__` disagreed with its own metadata because the number lived in
+# two places that happened to agree until they did not.
+dynamic = ["version"]
+description = "Render a QC certificate from a bmc-sensor-audit attestation."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "James Sheen" }]
+keywords = ["openbmc", "bmc", "qa", "certificate", "attestation",
+            "manufacturing", "quality-control", "odm"]
+
+# Two real dependencies, and the first is the architecture. The attestation is
+# validated with the audit tool's OWN validator rather than a second copy of its
+# rules -- one format with two implementations is one format that will drift.
+# Pinned the way the audit tool pins its engine.
+dependencies = [
+    "bmc-sensor-audit>=0.1.0,<0.2",
+    "fpdf2>=2.7,<3",
+]
+
+[project.optional-dependencies]
+# A fallback PDF reader for `verify` on hosts without poppler. Not required:
+# `pdftotext` is preferred precisely because it is not ours.
+verify = ["pypdf>=4"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+cert-generator = "cert_generator.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/james-sheen/cert-generator"
+Source = "https://github.com/james-sheen/cert-generator"
+Issues = "https://github.com/james-sheen/cert-generator/issues"
+
+[tool.hatch.version]
+path = "src/cert_generator/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cert_generator"]
+
+[tool.hatch.build.targets.sdist]
+# The sdist is built from the working tree, and the working tree is not the
+# repository. The sibling repo published four untracked files this way; naming
+# what belongs in the archive is cheaper than discovering what does not.
+include = ["src/", "tests/", "examples/", "README.md", "LICENSE", "NOTICE",
+           "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+
+# Rendered certificates. Every one carries a real unit's serial number, work
+# order and the name of whoever signed it -- this package exists to put them
+# there. A certificate committed by accident is a disclosure of exactly the data
+# the audit tool refuses to hold, published from the repository that holds it.
+# Nothing here is written by the suite; the tests render into a temporary
+# directory. Anything landing here was produced deliberately.
+certificates/
+*.certificate.json
+*.certificate.pdf

@@ -1,0 +1,111 @@
+# The suite, and then the tool is actually run.
+#
+# The unit tests cover the builder, the scrubber and the architectural boundary
+# without producing a document. That is most of the program and none of what this
+# repository exists to do -- so the CLI runs afterwards against the examples, and
+# the exit codes it returns are pinned.
+#
+# poppler is installed on purpose. Without it the projection tests skip, and a
+# check that silently stopped running in the one place it matters is worse than no
+# check at all -- so CERT_GENERATOR_REQUIRE_PDF_ORACLE turns that skip into a
+# failure here.
+
+name: checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Not finding an oracle is not a pass. Both of these convert a skip into a red.
+  CERT_GENERATOR_REQUIRE_PDF_ORACLE: "1"
+  CERT_GENERATOR_REQUIRE_SEAM: "1"
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: The independent PDF reader
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
+      - name: Install, with the referee and the engine behind it
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --upgrade pip
+          python3 -m pip install --quiet -e '.[dev,verify]'
+          python3 -m pip install --quiet 'bmc-sensor-audit[detect]>=0.1.0,<0.2'
+          python3 -m pip show cert-generator   | sed -n 's/^Version: /  cert-generator  /p'
+          python3 -m pip show bmc-sensor-audit | sed -n 's/^Version: /  referee         /p'
+          python3 -m pip show arbiter-engine   | sed -n 's/^Version: /  engine          /p'
+
+      - name: The suite
+        run: python3 -m pytest tests/ -q
+
+      - name: A unit with findings renders, and says so with exit 1
+        run: |
+          set -euo pipefail
+          set +e
+          cert-generator render \
+            --attestation examples/attestation.json \
+            --identity examples/identity.json \
+            --coverage examples/coverage.json \
+            --out-json /tmp/certificate.json \
+            --out-pdf /tmp/certificate.pdf
+          code=$?
+          set -e
+          test "${code}" -eq 1 || { echo "expected 1, got ${code}"; exit 1; }
+          test -s /tmp/certificate.json
+          test -s /tmp/certificate.pdf
+
+      - name: The page matches the record
+        run: cert-generator verify --certificate /tmp/certificate.json --pdf /tmp/certificate.pdf
+
+      - name: The certificate does not claim a flat pass
+        # A word-level check on the rendered PDF, not on the source. The source
+        # is where the forbidden strings are DEFINED, so grepping it would find
+        # them every time and prove nothing.
+        run: |
+          set -euo pipefail
+          # Flattened first. The PDF wraps its own text, so the scope sentence
+          # arrives split across two lines and a grep for the whole phrase would
+          # never match -- a step that ships permanently red, or worse, one whose
+          # positive assertions are quietly unreachable.
+          pdftotext -layout /tmp/certificate.pdf - \
+            | tr '\n' ' ' | tr -s ' ' > /tmp/certificate.txt
+          for claim in "100%" "100 %" "fully compliant" "all clear" "passed all"; do
+            if grep -qiF -- "${claim}" /tmp/certificate.txt; then
+              echo "the certificate claims '${claim}'"; exit 1
+            fi
+          done
+          grep -q "Not part of this judgment" /tmp/certificate.txt
+          grep -q "declined and therefore not judged" /tmp/certificate.txt
+          grep -q "Fan 3 Tach" /tmp/certificate.txt
+          echo "  the denominator is on the page"
+
+      - name: A shapeless artifact is refused, with exit 2 and no output
+        # The non-vacuity check. Every run above is expected to succeed, so a
+        # build that had broken into always writing a document would sail through
+        # them. This one hands it something the validator must reject.
+        run: |
+          set -euo pipefail
+          echo '{"format": "not-the-one"}' > /tmp/shapeless.json
+          set +e
+          cert-generator render \
+            --attestation /tmp/shapeless.json \
+            --identity examples/identity.json \
+            --out-json /tmp/refused.json
+          code=$?
+          set -e
+          test "${code}" -eq 2 || { echo "expected 2 (could not complete), got ${code}"; exit 1; }
+          test ! -e /tmp/refused.json || { echo "a certificate was written from a refused artifact"; exit 1; }
+          echo "  refused, and nothing was written"

@@ -1,0 +1,60 @@
+{
+  "format": "bmc-sensor-audit/attestation/1",
+  "target": "reference-board",
+  "engine": {
+    "schema_version": 1,
+    "boundary": "engine-side evidence only; production attestation records are v0.2"
+  },
+  "checked": {
+    "invariants": 6,
+    "entities": 3
+  },
+  "findings": [
+    {
+      "sensor": "Inlet Temp",
+      "entity_type": "Inlet_Temp",
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "Inlet Temp is above its upper critical bound of 80.0"
+    }
+  ],
+  "not_checked": [
+    {
+      "sensor": "Inlet Temp",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation"
+    },
+    {
+      "sensor": "Outlet Temp",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation"
+    },
+    {
+      "sensor": "P12V",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation"
+    }
+  ],
+  "evidence": [
+    {
+      "sensor": "Inlet Temp",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 92.4,
+        "threshold": 80.0,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    }
+  ],
+  "unattested": [],
+  "unread_feeds": []
+}
