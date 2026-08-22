@@ -9,10 +9,13 @@ PyPI answers 404 for. A mechanism copied without its premise is a check that run
 correctly and asks the wrong question.
 
 What the README can be held to is agreeing with itself: a page that says this is
-unreleased must not also hand a reader a command that only works once it is. The
-version that appears in `odm-qa-pipeline`'s pin manifest for gate 4 is the same
-git direct reference the block at the top of the README now shows, so the two
-records of *where this comes from* say one thing.
+unreleased must not also hand a reader a command that only works once it is.
+
+`DIST` below is the **distribution** name, which is not the command's. PyPI
+refuses `cert-generator` as too similar to an existing `certgenerator`, so this
+publishes as `odm-cert-generator` and installs a `cert-generator` script. The
+install line is the thing under test here, so the name an index is asked for is
+the one that belongs in the matcher.
 """
 
 from __future__ import annotations
@@ -27,7 +30,7 @@ from cert_generator import __version__
 
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
-DIST = "cert-generator"
+DIST = "odm-cert-generator"
 
 UNRELEASED = "Not yet released"
 
@@ -36,9 +39,9 @@ UNRELEASED = "Not yet released"
 # release here needs no new spelling.
 RELEASED = re.compile(r"\*\*Released[^*]*?(\d+\.\d+\.\d+)\*\*")
 
-# `pip install cert-generator`, quoted or not, with or without an extra -- the
+# `pip install odm-cert-generator`, quoted or not, with or without an extra -- the
 # form that only works once an index carries the name. The lookahead is what makes
-# it usable while unreleased: `pip install "cert-generator @ git+https://..."` is
+# it usable while unreleased: `pip install "odm-cert-generator @ git+https://..."` is
 # a direct reference, not an index lookup, and must not trip this.
 #
 # Spelled strictly on purpose: a guard with false positives is a guard the next

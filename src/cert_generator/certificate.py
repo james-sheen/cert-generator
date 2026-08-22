@@ -87,7 +87,13 @@ def build_certificate(attestation: Any, identity: Identity, *,
     return {
         "format": CERTIFICATE_FORMAT,
         "generator": {
-            "name": "cert-generator",
+            # The DISTRIBUTION name, not the command. A recipient checking where
+            # a certificate came from needs a string that resolves on an index,
+            # and the two differ here: PyPI refuses `cert-generator` as too
+            # similar to an existing `certgenerator`, so the project publishes
+            # as `odm-cert-generator` while the command it installs stays
+            # `cert-generator`.
+            "name": "odm-cert-generator",
             "version": __version__,
             "rendered_at": stamped.isoformat(),
         },

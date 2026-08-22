@@ -3,13 +3,19 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Not yet released.** PyPI refuses this distribution name: it ultranormalises to
-`certgenerator`, which an unrelated project holds, so the upload returns *400 too
-similar to an existing project*. A name has to be chosen. Until then, install it
-from git — the same requirement `odm-qa-pipeline` pins for gate 4:
+**Released — 0.1.0**, tagged `v0.1.0`, Apache-2.0, on PyPI as
+`odm-cert-generator`.
+
+**The distribution and the command differ, and the reason is worth one line.**
+PyPI ultranormalises a name by stripping its separators, so `cert-generator`
+becomes `certgenerator` — which an unrelated project holds — and the upload is
+refused as *too similar to an existing project*. So this publishes as
+`odm-cert-generator` and installs a command still called `cert-generator`. A
+certificate records the **distribution** name, because that is the one that
+resolves on an index.
 
 ```
-pip install "cert-generator @ git+https://github.com/james-sheen/cert-generator@master"
+pip install odm-cert-generator
 
 cert-generator render \
     --attestation attestation.json \
@@ -162,9 +168,8 @@ the field that is not on it.
   silently rewritten is worse than a failed render. Shipping a Unicode font would
   lift this; it has not been done.
 - **`verify` needs a PDF reader.** poppler's `pdftotext` if it is on `PATH`,
-  otherwise the `verify` extra, for pypdf — the same git requirement as above with
-  `[verify]` after the name. If neither is present the command exits `2` — not
-  finding a reader is not a pass.
+  otherwise `pip install 'odm-cert-generator[verify]'` for pypdf. If neither is
+  present the command exits `2` — not finding a reader is not a pass.
 - **Nothing here re-audits the machine.** `verify` proves the page matches the
   record. The record's authority comes from the attestation, and the
   attestation's from the engine.

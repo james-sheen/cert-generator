@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "cert-generator"
+name = "odm-cert-generator"
 # One home, read by the build backend. The sibling repository shipped a wheel
 # whose `__version__` disagreed with its own metadata because the number lived in
 # two places that happened to agree until they did not.

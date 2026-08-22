@@ -136,7 +136,7 @@ class TestTheRecordIdentifiesItself:
         assert certificate["format"] == CERTIFICATE_FORMAT
 
     def test_the_generator_and_source_are_recorded(self, certificate):
-        assert certificate["generator"]["name"] == "cert-generator"
+        assert certificate["generator"]["name"] == "odm-cert-generator"
         assert certificate["source"]["attestation_format"].startswith(
             "bmc-sensor-audit/attestation/")
         assert certificate["source"]["engine_schema_version"] == 1
