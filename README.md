@@ -3,8 +3,11 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
+**Not yet released** — no tag, and no index carries this name. Install it from
+git, which is the same requirement `odm-qa-pipeline` pins for gate 4:
+
 ```
-pip install cert-generator
+pip install "cert-generator @ git+https://github.com/james-sheen/cert-generator@master"
 
 cert-generator render \
     --attestation attestation.json \
@@ -145,8 +148,9 @@ the field that is not on it.
   silently rewritten is worse than a failed render. Shipping a Unicode font would
   lift this; it has not been done.
 - **`verify` needs a PDF reader.** poppler's `pdftotext` if it is on `PATH`,
-  otherwise `pip install 'cert-generator[verify]'` for pypdf. If neither is
-  present the command exits `2` — not finding a reader is not a pass.
+  otherwise the `verify` extra, for pypdf — the same git requirement as above with
+  `[verify]` after the name. If neither is present the command exits `2` — not
+  finding a reader is not a pass.
 - **Nothing here re-audits the machine.** `verify` proves the page matches the
   record. The record's authority comes from the attestation, and the
   attestation's from the engine.
