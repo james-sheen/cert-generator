@@ -122,6 +122,18 @@ denominator and `1` would let a reader conclude the rest was checked.
 A certificate is still written when the verdict is `1`. A QC record for a unit that
 failed is a valid document.
 
+## A certificate is not the pipeline's verdict
+
+Two records run in parallel and neither contains the other. This one certifies what
+the referee established about a unit: the attestation, the identity, and the
+declaration diff when one is supplied. Conformance and fault injection are not in
+it. Those meet in `odm-qa-pipeline aggregate`, which answers a different question —
+did all four gates run, and what is the worst thing any of them found.
+
+Worth stating because reading either as the other goes wrong in both directions: a
+clean certificate says nothing about whether the injection gate ran, and a clean
+pipeline verdict is not a document anyone can hand to a customer.
+
 ## The identity block
 
 ```json
