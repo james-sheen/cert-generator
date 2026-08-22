@@ -137,3 +137,64 @@ class TestTheReadmeDoesNotPromiseAnIndex:
             f'pip install "{DIST} @ git+https://example.invalid/x@master"')
         assert not INDEX_INSTALL.search("pip install -r requirements.txt")
         assert not INDEX_INSTALL.search("pip install -e .")
+
+
+class TestNothingNamesTheCommandAsADistribution:
+    """`cert-generator` is the command; `odm-cert-generator` is the thing an
+    index carries. Any `pip install` or `pip show` naming the first is a line
+    that fails when someone runs it.
+
+    **This is filed after it happened twice in one release.** The rename swept
+    `pyproject.toml`, `src/` and `tests/` -- the population I grepped -- and
+    missed the CI step that ran `pip show cert-generator`, which found nothing
+    and ended the job under `pipefail`, and a `VerificationError` that told
+    readers to install a distribution that does not exist. Fixing the two
+    instances leaves the class open; this closes it.
+    """
+
+    # Not preceded by `odm-`: the correct name contains the wrong one as a
+    # substring, so a plain search for it flags every correct line too.
+    NAMES_THE_COMMAND = re.compile(
+        r"pip (?:install|show)\s+(?:-\S+\s+)*['\"]?(?<!odm-)cert-generator")
+
+    def _shipped(self):
+        for pattern in ("src/**/*.py", ".github/workflows/*.yml", "*.md",
+                        "pyproject.toml"):
+            yield from sorted(ROOT.glob(pattern))
+
+    def test_the_matcher_separates_the_two_names(self):
+        """Non-vacuity, and the reason this needed a lookbehind at all."""
+        assert self.NAMES_THE_COMMAND.search("pip install cert-generator")
+        assert self.NAMES_THE_COMMAND.search("pip show cert-generator")
+        assert self.NAMES_THE_COMMAND.search("pip install 'cert-generator[verify]'")
+        assert not self.NAMES_THE_COMMAND.search("pip install odm-cert-generator")
+        assert not self.NAMES_THE_COMMAND.search(
+            "pip show odm-cert-generator | sed -n 's/^Version: //p'")
+
+    def test_no_shipped_file_asks_an_index_for_the_command_name(self):
+        """Comment lines are skipped, and that is not tidiness.
+
+        Written without the skip, this flagged the comment above the very line
+        it was written to protect -- the one explaining why `pip show
+        cert-generator` is wrong. A comment describing a rule is not a breach of
+        it, and a guard that cannot tell the difference is one nobody can
+        document around. `test_pins.py` skips them for the same reason.
+        """
+        offences = []
+        for path in self._shipped():
+            for number, line in enumerate(
+                    path.read_text(encoding="utf-8").splitlines(), start=1):
+                if line.lstrip().startswith(("#", "//")):
+                    continue
+                if self.NAMES_THE_COMMAND.search(line):
+                    offences.append(f"{path.relative_to(ROOT)}:{number}: "
+                                    f"{line.strip()[:72]}")
+        assert not offences, (
+            "these ask an index for `cert-generator`, which it does not carry:\n"
+            + "\n".join(offences))
+
+    def test_the_scan_covered_something(self):
+        """The check above asserts an absence over a glob. A glob that matches
+        nothing asserts an absence over nothing."""
+        scanned = list(self._shipped())
+        assert len(scanned) >= 6, f"only {len(scanned)} file(s) scanned"

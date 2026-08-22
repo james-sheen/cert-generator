@@ -3,7 +3,7 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.1.0**, tagged `v0.1.0`, Apache-2.0, on PyPI as
+**Released — 0.1.1**, tagged `v0.1.1`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
 
 **The distribution and the command differ, and the reason is worth one line.**

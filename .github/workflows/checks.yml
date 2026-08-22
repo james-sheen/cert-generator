@@ -44,7 +44,12 @@ jobs:
           python3 -m pip install --quiet --upgrade pip
           python3 -m pip install --quiet -e '.[dev,verify]'
           python3 -m pip install --quiet 'bmc-sensor-audit[detect]>=0.1.0,<0.2'
-          python3 -m pip show cert-generator   | sed -n 's/^Version: /  cert-generator  /p'
+          # The distribution, not the command: `pip show cert-generator` finds
+          # nothing and, under `pipefail`, ends the step. This is what caught
+          # the rename -- and it caught it after the release, because the
+          # sweep that renamed everything else read `pyproject.toml`, `src/`
+          # and `tests/` and never looked in here.
+          python3 -m pip show odm-cert-generator | sed -n 's/^Version: /  odm-cert-generator  /p'
           python3 -m pip show bmc-sensor-audit | sed -n 's/^Version: /  referee         /p'
           python3 -m pip show arbiter-engine   | sed -n 's/^Version: /  engine          /p'
 

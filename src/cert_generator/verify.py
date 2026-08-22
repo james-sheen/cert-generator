@@ -66,9 +66,12 @@ def pdf_text(path: str | Path) -> str:
         from pypdf import PdfReader
     except ImportError as error:
         raise VerificationError(
+            # The DISTRIBUTION name, which is not this command's. Naming the
+            # command here would hand the reader something that fails: PyPI
+            # refuses `cert-generator` as too similar to an existing project.
             "no PDF reader available: install poppler-utils for pdftotext, or "
-            "pip install 'cert-generator[verify]' for pypdf. A certificate that "
-            "could not be read has not been checked") from error
+            "pip install 'odm-cert-generator[verify]' for pypdf. A certificate "
+            "that could not be read has not been checked") from error
 
     return "\n".join(page.extract_text() or "" for page in PdfReader(str(path)).pages)
 
