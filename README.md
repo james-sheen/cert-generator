@@ -3,8 +3,10 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Not yet released** — no tag, and no index carries this name. Install it from
-git, which is the same requirement `odm-qa-pipeline` pins for gate 4:
+**Not yet released.** PyPI refuses this distribution name: it ultranormalises to
+`certgenerator`, which an unrelated project holds, so the upload returns *400 too
+similar to an existing project*. A name has to be chosen. Until then, install it
+from git — the same requirement `odm-qa-pipeline` pins for gate 4:
 
 ```
 pip install "cert-generator @ git+https://github.com/james-sheen/cert-generator@master"
