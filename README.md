@@ -3,8 +3,13 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.1.1**, tagged `v0.1.1`, Apache-2.0, on PyPI as
+**Released — 0.1.2**, tagged `v0.1.2`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+0.1.2 lets a certificate name the capture it was judged from. The audit tool
+refuses to hold unit identity and this package holds nothing else, so the
+binding between them has to happen on content — and a content handle is what
+`bmc-sensor-audit` 0.1.1 supplies. Needs that version.
 
 **The distribution and the command differ, and the reason is worth one line.**
 PyPI ultranormalises a name by stripping its separators, so `cert-generator`
