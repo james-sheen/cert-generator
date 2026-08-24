@@ -19,7 +19,9 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from .certificate import CertificateError, build_certificate, has_coverage_regression
+from .certificate import (CertificateError, build_certificate,
+                          capture_from_digest, capture_from_walk,
+                          has_coverage_regression)
 from .coverage import CoverageError, load_coverage
 from .identity import IdentityError, load_identity
 from .render import RenderError, render_pdf
@@ -47,7 +49,13 @@ def _render(args: argparse.Namespace) -> int:
         attestation = _read_json(args.attestation, "attestation")
         identity = load_identity(args.identity)
         coverage = load_coverage(args.coverage) if args.coverage else None
-        certificate = build_certificate(attestation, identity, coverage=coverage)
+        capture = None
+        if args.walk:
+            capture = capture_from_walk(args.walk)
+        elif args.walk_digest:
+            capture = capture_from_digest(args.walk_digest)
+        certificate = build_certificate(attestation, identity, coverage=coverage,
+                                        capture=capture)
     except (CertificateError, IdentityError, CoverageError) as error:
         print(f"could not build the certificate: {error}", file=sys.stderr)
         return EXIT_INCOMPLETE
@@ -135,6 +143,20 @@ def build_parser() -> argparse.ArgumentParser:
                         help="JSON from 'bmc-sensor-audit coverage --json'; "
                              "without it the certificate cannot state how many "
                              "declared sensors were present, and says so")
+    # Two ways to name the capture, because the walk is often gone by the time a
+    # certificate is rendered -- a clean orchestrator run deletes its workdir.
+    # Mutually exclusive: supplying both would leave a reader unable to tell which
+    # one the printed handle came from.
+    which_walk = render.add_mutually_exclusive_group()
+    which_walk.add_argument("--walk",
+                            help="the recorded walk this judgment was made from; "
+                                 "its handle is computed here and the certificate "
+                                 "records that it was verified")
+    which_walk.add_argument("--walk-digest", metavar="sha256:...",
+                            help="a handle produced elsewhere, from "
+                                 "'bmc-sensor-audit capture --print-digest'. "
+                                 "Recorded as unverified, because nothing here "
+                                 "checked it")
     render.add_argument("--out-json", help="write the certificate record here")
     render.add_argument("--out-pdf", help="write the printable projection here")
     render.set_defaults(handler=_render)

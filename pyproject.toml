@@ -22,7 +22,9 @@ keywords = ["openbmc", "bmc", "qa", "certificate", "attestation",
 # rules -- one format with two implementations is one format that will drift.
 # Pinned the way the audit tool pins its engine.
 dependencies = [
-    "bmc-sensor-audit>=0.1.0,<0.2",
+    # 0.1.1 is the floor and not a preference: the capture handle uses the
+    # tool's own `walk_digest` and `validate_walk`, and neither exists before it.
+    "bmc-sensor-audit>=0.1.1,<0.2",
     "fpdf2>=2.7,<3",
 ]
 

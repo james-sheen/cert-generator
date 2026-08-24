@@ -101,6 +101,35 @@ needs to check it.
 The suite checks the same property with poppler's `pdftotext` — a reader nobody
 here wrote.
 
+## Which capture the judgment came from
+
+The audit tool refuses to hold unit identity; this package holds nothing else. The
+binding between the two has to happen on **content**, and since the tool shipped a
+content handle there is finally something to bind to:
+
+```
+cert-generator render --attestation attestation.json --identity identity.json \
+                      --walk walk.json          # computes and verifies the handle
+cert-generator render ... --walk-digest sha256:81422480...   # records one produced elsewhere
+```
+
+Both are legitimate and they are **not the same claim**, so the record carries
+which one it is. `--walk` means this program read the file and computed the
+handle; `--walk-digest` means it was handed the value and checked nothing. A clean
+orchestrator run deletes its walks long before a certificate is rendered, so often
+the handle is all that survives — that case is supported and labelled rather than
+quietly presented as a measurement.
+
+The handle is a SHA-256 over the walk file's bytes, computed with the audit tool's
+own function so there is one definition of it rather than two. A recipient
+matches it with `sha256sum` and no tooling at all; a walk that does not match is
+not the walk that was judged. A malformed handle is refused rather than printed —
+one that looks like proof and matches nothing is worse than none.
+
+Reading a walk is not a boundary crossing. A walk carries no identity by
+construction: the audit tool serialises the parsed sensor set and never the raw
+payloads, which is the same rule described below.
+
 ## Identity goes one way
 
 Identity flows *into* the certificate and never back toward the audit inputs. This

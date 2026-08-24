@@ -30,12 +30,25 @@ import subprocess
 from pathlib import Path
 from typing import Any, Iterable
 
-__all__ = ["VerificationError", "pdf_text", "numbers_in", "verify_projection"]
+__all__ = ["VerificationError", "pdf_text", "numbers_in", "handles_in",
+           "verify_projection"]
 
 # Integers and decimals. Deliberately not matching a leading sign: a hyphen in
 # this document is a dash, and treating "-- 3" as negative three would invent a
 # number neither side wrote.
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")
+
+# A content handle: `sha256:` and sixty-four hex characters. Removed from BOTH
+# sides before numbers are counted, and compared whole instead.
+#
+# **Not an exemption -- a category correction, and it makes the check stronger.**
+# A digest is an identifier that happens to contain digits. Left in, its hex would
+# contribute dozens of short digit runs to the set of numbers the page is allowed
+# to print, so a stray `83` anywhere on the certificate would be "backed" by a
+# fragment of a hash. That silently weakens the one check standing between the
+# document and a number nothing supports. Taken out and matched as a whole token,
+# it is verified more strictly than any number is.
+_HANDLE = re.compile(r"\bsha256:[0-9a-f]{64}\b")
 
 
 class VerificationError(RuntimeError):
@@ -77,7 +90,12 @@ def pdf_text(path: str | Path) -> str:
 
 
 def numbers_in(text: str) -> list[str]:
-    return _NUMBER.findall(text)
+    return _NUMBER.findall(_HANDLE.sub(" ", text))
+
+
+def handles_in(text: str) -> list[str]:
+    """Content handles, matched whole. See `_HANDLE`."""
+    return _HANDLE.findall(text)
 
 
 def _scalars(node: Any) -> Iterable[str]:
@@ -99,11 +117,21 @@ def verify_projection(certificate: dict | str | Path,
         certificate = json.loads(Path(certificate).read_text(encoding="utf-8"))
 
     allowed: set[str] = set()
+    allowed_handles: set[str] = set()
     for scalar in _scalars(certificate):
-        allowed.update(_NUMBER.findall(scalar))
+        allowed.update(numbers_in(scalar))
+        allowed_handles.update(handles_in(scalar))
 
+    text = pdf_text(pdf)
     unbacked: list[str] = []
-    for number in numbers_in(pdf_text(pdf)):
+    for number in numbers_in(text):
         if number not in allowed and number not in unbacked:
             unbacked.append(number)
+    # Handles are checked the same way and in the same list, because a page
+    # printing a capture handle the record does not carry is making the same kind
+    # of claim as a page printing a reading the record does not carry -- and it is
+    # a worse one, since a handle looks like proof.
+    for handle in handles_in(text):
+        if handle not in allowed_handles and handle not in unbacked:
+            unbacked.append(handle)
     return unbacked

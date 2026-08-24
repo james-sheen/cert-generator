@@ -180,6 +180,15 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
     row("Attestation format", str(source["attestation_format"]))
     row("Engine schema", _number(source["engine_schema_version"]))
     row("Target", str(source["target_label"]))
+    if source.get("walk_digest"):
+        # Printed, because a certificate that knows which capture it came from and
+        # keeps that to itself has left the recipient the one job they cannot do:
+        # matching the document to the evidence. `sha256sum` on the walk file
+        # reproduces this, with no tooling and nothing to trust.
+        row("Capture", str(source["walk_digest"]))
+        row("Capture handle", "computed here from the walk"
+            if source.get("walk_digest_verified")
+            else "supplied; not verified by this program")
 
     path = Path(path)
     pdf.output(str(path))

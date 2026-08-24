@@ -24,7 +24,10 @@ survives exactly as long as the reviewer's attention.
 
 from __future__ import annotations
 
+import re
+from dataclasses import dataclass
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from . import CERTIFICATE_FORMAT, __version__
@@ -32,18 +35,74 @@ from . import coverage as coverage_module
 from .identity import Identity
 
 try:
-    # The referee's *shipped* validator, not a copy of its rules. A second
+    # The referee's *shipped* validators, not copies of its rules. A second
     # implementation of one format is a second implementation that will drift,
-    # and the tool ships this one precisely so a recipient can run it.
+    # and the tool ships these precisely so a recipient can run them.
     from bmc_sensor_audit.detect.attestation import (ATTESTATION_FORMAT,
                                                      validate_attestation)
+    from bmc_sensor_audit.inventory.redfish import validate_walk, walk_digest
 except ImportError as error:                                 # pragma: no cover
     raise ImportError(
         "cert-generator validates its input with the audit tool's own "
-        "validate_attestation, so bmc-sensor-audit must be installed: "
-        "pip install 'bmc-sensor-audit>=0.1.0,<0.2'") from error
+        "validate_attestation and walk_digest, so bmc-sensor-audit must be "
+        "installed: pip install 'bmc-sensor-audit>=0.1.1,<0.2'") from error
 
-__all__ = ["CertificateError", "build_certificate", "ATTESTATION_FORMAT"]
+__all__ = ["CertificateError", "Capture", "build_certificate",
+           "capture_from_walk", "capture_from_digest", "ATTESTATION_FORMAT"]
+
+#: A content handle: `sha256:` and sixty-four hex characters, the audit tool's
+#: own shape. Held here so a malformed one is refused before it is printed.
+_HANDLE = re.compile(r"sha256:[0-9a-f]{64}")
+
+
+@dataclass(frozen=True)
+class Capture:
+    """Which walk a certificate was judged from, and how firmly we know it.
+
+    **`verified` is the whole reason this is a pair rather than a string.** A
+    handle computed here from a file this program read is a measurement; a handle
+    typed in from a run log is a transcription. Both are legitimate -- a clean
+    orchestrator run deletes its walks long before a certificate is rendered, so
+    often the handle is all that survives -- and they support different claims, so
+    the record carries which one it is rather than flattening them.
+    """
+
+    digest: str
+    verified: bool
+
+
+def capture_from_walk(path: str | Path) -> Capture:
+    """Read the walk and compute its handle with the audit tool's own function.
+
+    Refuses a file the tool's validator refuses. Reading a walk is not a boundary
+    crossing -- a walk carries no identity by construction, because the audit tool
+    serialises the parsed sensor set and never the raw payloads. Identity flows
+    into this package and never back out toward an audit input.
+    """
+    path = Path(path)
+    try:
+        raw = path.read_bytes()
+    except OSError as error:
+        raise CertificateError(f"cannot read the walk at {path}: {error}") from None
+    try:
+        import json
+
+        payload = json.loads(raw)
+    except ValueError as error:
+        raise CertificateError(
+            f"{path} is not parseable as JSON: {error}") from None
+    problems = validate_walk(payload)
+    if problems:
+        raise CertificateError(
+            "the walk was refused by the audit tool's own validator, so this "
+            "certificate will not cite it: " + "; ".join(problems))
+    return Capture(digest=walk_digest(raw), verified=True)
+
+
+def capture_from_digest(value: str) -> Capture:
+    """Record a handle produced elsewhere. Nothing here checked it, and the
+    certificate says so."""
+    return Capture(digest=(value or "").strip(), verified=False)
 
 # Words this document does not use about itself. Checked by test rather than by
 # habit: the honest template is the differentiator, and the failure mode is a
@@ -58,6 +117,7 @@ class CertificateError(ValueError):
 
 def build_certificate(attestation: Any, identity: Identity, *,
                       coverage: Any = None,
+                      capture: Capture | None = None,
                       now: datetime | None = None) -> dict:
     """Refuse a shapeless artifact; otherwise project it into a certificate.
 
@@ -72,6 +132,12 @@ def build_certificate(attestation: Any, identity: Identity, *,
             "nothing was rendered: " + "; ".join(problems))
 
     stamped = (now or datetime.now(timezone.utc)).replace(microsecond=0)
+
+    if capture is not None and not _HANDLE.fullmatch(capture.digest or ""):
+        raise CertificateError(
+            f"the capture handle {capture.digest!r} is not `sha256:` followed by "
+            f"sixty-four hex characters. A certificate that printed an unusable "
+            f"handle would look like proof and match nothing")
 
     if coverage is None:
         diff = coverage_module.absent()
@@ -122,6 +188,15 @@ def build_certificate(attestation: Any, identity: Identity, *,
             "engine_schema_version": (attestation.get("engine") or {}).get(
                 "schema_version"),
             "target_label": attestation.get("target"),
+            # Which CAPTURE this judgment was made from, when the caller supplied
+            # one. `None` rather than absent when it did not: a certificate that
+            # silently omits the key reads like one whose capture is beyond doubt.
+            "walk_digest": capture.digest if capture else None,
+            # Whether THIS program computed the handle from a file it read, or was
+            # handed the value. Both are legitimate -- the walk is often deleted
+            # long before a certificate is rendered -- and they are not the same
+            # claim, so the record says which.
+            "walk_digest_verified": capture.verified if capture else None,
         },
     }
 
