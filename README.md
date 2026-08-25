@@ -3,8 +3,14 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.1.2**, tagged `v0.1.2`, Apache-2.0, on PyPI as
+**Released — 0.1.3**, tagged `v0.1.3`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+**0.1.3 changes nothing this package does.** It carries the repository's
+publication-hygiene tooling: the rules now run over commit messages as well as
+files, and a pre-commit hook refuses a commit whose staged content it has not
+read. The only differences a reader will find in the installed distribution are
+this paragraph and the version number. Nothing here obliges an upgrade.
 
 0.1.2 lets a certificate name the capture it was judged from. The audit tool
 refuses to hold unit identity and this package holds nothing else, so the
