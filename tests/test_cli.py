@@ -10,6 +10,8 @@ import json
 
 import pytest
 
+from cert_generator.verify import available_reader
+
 from cert_generator.cli import EXIT_CLEAN, EXIT_INCOMPLETE, EXIT_RECORDED, main
 
 
@@ -96,12 +98,25 @@ class TestCouldNotComplete:
         assert main(render_argv(paths, "--coverage", str(bad))) == EXIT_INCOMPLETE
 
 
+NEEDS_READER = pytest.mark.skipif(
+    available_reader() is None,
+    reason="no PDF reader is installed (poppler's pdftotext or pypdf), so the "
+           "rendered page was never opened and the projection was not checked "
+           "-- which is a different answer from the projection being wrong")
+
+
 class TestVerify:
+    # Per-test, NOT on the class. `test_an_unreadable_pdf_exits_two_not_zero`
+    # below is the one whose subject IS the absence of a reader, so it has to
+    # keep running when there is none -- a class-level guard skipped it and
+    # turned the test for this exact situation off in this exact situation.
+    @NEEDS_READER
     def test_a_faithful_pair_exits_zero(self, paths):
         main(render_argv(paths, "--out-pdf", paths["out_pdf"]))
         assert main(["verify", "--certificate", paths["out_json"],
                      "--pdf", paths["out_pdf"]]) == EXIT_CLEAN
 
+    @NEEDS_READER
     def test_a_mismatched_pair_is_caught(self, paths, tmp_path):
         main(render_argv(paths, "--out-pdf", paths["out_pdf"]))
         record = json.loads(open(paths["out_json"]).read())

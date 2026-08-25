@@ -55,6 +55,25 @@ class VerificationError(RuntimeError):
     """The check could not be run. Distinct from the check failing."""
 
 
+def available_reader() -> str | None:
+    """Which independent PDF reader is installed, or None.
+
+    Exported so a caller -- including this package's own tests -- can ask
+    whether the projection check CAN run before treating its answer as one.
+    They used to answer that question by running the check and reading the
+    failure, which reports *this certificate is wrong* for an environment that
+    never opened it. `pdf_text` below selects through this same function, so the
+    predicate cannot drift away from the behaviour it describes.
+    """
+    if shutil.which("pdftotext"):
+        return "pdftotext"
+    try:
+        import pypdf  # noqa: F401
+    except ImportError:
+        return None
+    return "pypdf"
+
+
 def pdf_text(path: str | Path) -> str:
     """The PDF's text, via whichever reader is installed.
 
@@ -65,8 +84,9 @@ def pdf_text(path: str | Path) -> str:
     if not path.exists():
         raise VerificationError(f"no PDF at {path}")
 
-    binary = shutil.which("pdftotext")
-    if binary:
+    reader = available_reader()
+    if reader == "pdftotext":
+        binary = shutil.which("pdftotext")
         result = subprocess.run([binary, "-layout", str(path), "-"],
                                 capture_output=True, text=True)
         if result.returncode != 0:

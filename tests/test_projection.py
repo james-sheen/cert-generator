@@ -21,7 +21,7 @@ import subprocess
 import pytest
 
 from cert_generator.render import RenderError, render_pdf
-from cert_generator.verify import verify_projection
+from cert_generator.verify import available_reader, verify_projection
 
 NUMBER = re.compile(r"\d+(?:\.\d+)?")
 REQUIRED = os.environ.get("CERT_GENERATOR_REQUIRE_PDF_ORACLE") == "1"
@@ -59,6 +59,14 @@ class TestThePageWasActuallyRead:
             "would pass on an empty page")
 
 
+NEEDS_READER = pytest.mark.skipif(
+    available_reader() is None,
+    reason="no PDF reader is installed (poppler's pdftotext or pypdf), so the "
+           "rendered page was never opened and the projection was not checked "
+           "-- which is a different answer from the projection being wrong")
+
+
+@NEEDS_READER
 class TestNoNumberOnThePageIsAbsentFromTheRecord:
     def test_every_number_is_backed(self, certificate, rendered):
         unbacked = verify_projection(certificate, rendered)
