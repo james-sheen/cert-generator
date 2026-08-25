@@ -42,10 +42,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      # The oracles, because this workflow's `env:` above converts a missing
+      # one into a red for the whole file -- deliberately, since a projection
+      # check that silently stopped running is worse than none. A matrix job
+      # that skipped them would be green for the wrong reason on exactly the
+      # interpreters nothing else runs.
+      - name: The independent PDF reader
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
       - name: Tests
         run: |
           set -euo pipefail
-          python3 -m pip install --quiet ".[dev]"
+          python3 -m pip install --quiet -e '.[dev,verify]'
+          python3 -m pip install --quiet 'bmc-sensor-audit[detect]>=0.1.0,<0.2'
           python3 -m pytest tests/ -q
 
   checks:
