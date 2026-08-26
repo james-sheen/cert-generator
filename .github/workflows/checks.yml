@@ -54,7 +54,14 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m pip install --quiet -e '.[dev,verify]'
-          python3 -m pip install --quiet 'bmc-sensor-audit[detect]>=0.1.0,<0.2'
+          # The engine behind the referee. The RANGE is read from this package's
+          # own metadata and never restated here. This line used to carry
+          # `>=0.1.0,<0.2` -- a range that never matched pyproject.toml even
+          # before the break, and that went on installing a 0.1.x referee after
+          # the package declared `>=0.2.0`. CI was testing a combination pip
+          # would refuse to install for anybody else.
+          REQ="$(python3 -c 'from importlib.metadata import requires; print(next(r.split(";")[0].strip() for r in requires("odm-cert-generator") if r.split(";")[0].strip().startswith("bmc-sensor-audit")))')"
+          python3 -m pip install --quiet "bmc-sensor-audit[detect]${REQ#bmc-sensor-audit}"
           python3 -m pytest tests/ -q
 
   checks:
@@ -74,7 +81,14 @@ jobs:
           set -euo pipefail
           python3 -m pip install --quiet --upgrade pip
           python3 -m pip install --quiet -e '.[dev,verify]'
-          python3 -m pip install --quiet 'bmc-sensor-audit[detect]>=0.1.0,<0.2'
+          # The engine behind the referee. The RANGE is read from this package's
+          # own metadata and never restated here. This line used to carry
+          # `>=0.1.0,<0.2` -- a range that never matched pyproject.toml even
+          # before the break, and that went on installing a 0.1.x referee after
+          # the package declared `>=0.2.0`. CI was testing a combination pip
+          # would refuse to install for anybody else.
+          REQ="$(python3 -c 'from importlib.metadata import requires; print(next(r.split(";")[0].strip() for r in requires("odm-cert-generator") if r.split(";")[0].strip().startswith("bmc-sensor-audit")))')"
+          python3 -m pip install --quiet "bmc-sensor-audit[detect]${REQ#bmc-sensor-audit}"
           # The distribution, not the command: `pip show cert-generator` finds
           # nothing and, under `pipefail`, ends the step. This is what caught
           # the rename -- and it caught it after the release, because the
