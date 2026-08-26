@@ -42,10 +42,23 @@ try:
                                                      validate_attestation)
     from bmc_sensor_audit.inventory.redfish import validate_walk, walk_digest
 except ImportError as error:                                 # pragma: no cover
+    # The requirement is DERIVED from this package's own metadata, never
+    # restated. It was restated once and went stale at the next release: the
+    # string said `>=0.1.1,<0.2` while pyproject.toml said something else, and
+    # the only reader who ever sees this line is somebody already stuck.
+    def _declared() -> str:
+        try:
+            from importlib.metadata import requires
+            for req in requires("odm-cert-generator") or ():
+                if req.split(";")[0].strip().startswith("bmc-sensor-audit"):
+                    return req.split(";")[0].strip()
+        except Exception:                                    # pragma: no cover
+            pass
+        return "bmc-sensor-audit"
     raise ImportError(
         "cert-generator validates its input with the audit tool's own "
         "validate_attestation and walk_digest, so bmc-sensor-audit must be "
-        "installed: pip install 'bmc-sensor-audit>=0.1.1,<0.2'") from error
+        f"installed: pip install '{_declared()}'") from error
 
 __all__ = ["CertificateError", "Capture", "build_certificate",
            "capture_from_walk", "capture_from_digest", "ATTESTATION_FORMAT"]

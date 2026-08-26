@@ -24,7 +24,11 @@ keywords = ["openbmc", "bmc", "qa", "certificate", "attestation",
 dependencies = [
     # 0.1.1 is the floor and not a preference: the capture handle uses the
     # tool's own `walk_digest` and `validate_walk`, and neither exists before it.
-    "bmc-sensor-audit>=0.1.1,<0.2",
+    # Raised to 0.2.0 with that package's compatibility break: from 0.2.0 the
+    # referee refuses a command that asks to verify and not to verify at once,
+    # instead of running unverified. A certificate rendered from a walk taken
+    # over an unverified connection is a document nobody should rely on.
+    "bmc-sensor-audit>=0.2.0,<0.3",
     "fpdf2>=2.7,<3",
 ]
 

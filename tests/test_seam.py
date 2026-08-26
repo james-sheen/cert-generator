@@ -117,8 +117,25 @@ class TestAFreshlyProducedArtifactStillRenders:
             "driving it")
 
     def test_the_tool_is_the_one_we_pin(self):
-        import bmc_sensor_audit
-        major, minor = bmc_sensor_audit.__version__.split(".")[:2]
-        assert (int(major), int(minor)) == (0, 1), (
-            f"bmc-sensor-audit {bmc_sensor_audit.__version__} is outside the "
-            f"pinned range >=0.1.0,<0.2")
+        """The installed referee satisfies the range THIS package declares.
+
+        Derived, not restated. This assertion used to hardcode `(0, 1)` and name
+        the range `>=0.1.0,<0.2` in its own message -- while `pyproject.toml`
+        declared `>=0.1.1`. Two copies of one range, already disagreeing, and the
+        test could only ever check the copy it carried. Now there is one copy,
+        it lives where pip enforces it, and this reads it.
+        """
+        from importlib.metadata import requires, version
+        from packaging.requirements import Requirement
+
+        declared = [Requirement(r.split(";")[0].strip())
+                    for r in (requires("odm-cert-generator") or ())
+                    if r.split(";")[0].strip().startswith("bmc-sensor-audit")]
+        assert declared, (
+            "this package declares no bmc-sensor-audit requirement, so nothing "
+            "pins the referee it validates with")
+        installed = version("bmc-sensor-audit")
+        for req in declared:
+            assert req.specifier.contains(installed, prereleases=True), (
+                f"bmc-sensor-audit {installed} is installed and this package "
+                f"declares {req}; the environment and the metadata disagree")
