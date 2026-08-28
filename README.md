@@ -3,8 +3,13 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.2.0**, tagged `v0.2.0`, Apache-2.0, on PyPI as
+**Released — 0.2.1**, tagged `v0.2.1`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+**0.2.1 says what the problem list is.** `check` printed each problem indented
+under no header, so the first line an operator read began with whitespace and
+never named what the list was about. The refusal now negates the sentence the
+clean run prints, so both verdicts use one vocabulary. Nothing else changed.
 
 **0.2.0 raises the referee floor to 0.2.0.** From there the referee refuses a
 command that asks to verify and not to verify at once, instead of running

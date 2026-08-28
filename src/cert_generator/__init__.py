@@ -10,7 +10,7 @@ hatchling rather than repeating it, because a version written in two places is a
 version that will disagree with itself and no check will notice.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 CERTIFICATE_FORMAT = "cert-generator/certificate/1"
 
