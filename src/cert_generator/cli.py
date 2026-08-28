@@ -118,6 +118,13 @@ def _check(args: argparse.Namespace) -> int:
 
     problems = validate_attestation(artifact)
     if problems:
+        # **The indent needs the header it was borrowed from.** `_render` prints
+        # indented lines under a line naming what they are; this list copied the
+        # indent alone, so the first thing an operator read began with
+        # whitespace and never said what the list was about. The two verdicts
+        # are each other's negation on purpose: one question, one word for it.
+        print("the attestation is not well-formed; no certificate can be built "
+              "from it:", file=sys.stderr)
         for problem in problems:
             print(f"  {problem}", file=sys.stderr)
         return EXIT_INCOMPLETE

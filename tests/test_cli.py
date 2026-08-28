@@ -139,3 +139,47 @@ class TestCheck:
         broken = tmp_path / "broken.json"
         broken.write_text(json.dumps({"format": "wrong"}))
         assert main(["check", str(broken)]) == EXIT_INCOMPLETE
+
+    def test_the_problems_are_not_the_first_thing_said(self, tmp_path, capsys):
+        """**The indent was inherited and the header was not.**
+
+        `render` prints two indented lines and both sit under a header naming
+        what they are. This list copied the indent alone, so the first line an
+        operator read began with whitespace and never said what the list was
+        about. Both tests above pass either way -- they read the exit code and
+        nothing else, which is why this survived a release.
+        """
+        broken = tmp_path / "broken.json"
+        broken.write_text(json.dumps({"format": "wrong"}))
+        assert main(["check", str(broken)]) == EXIT_INCOMPLETE
+        said = capsys.readouterr().err.splitlines()
+        assert said, "the refusal said nothing at all"
+        assert not said[0].startswith(" "), (
+            f"the first line is an indented fragment: {said[0]!r}")
+
+    def test_the_problems_are_still_all_listed(self, tmp_path, capsys):
+        """Non-vacuity. A header that replaced the list would pass the test
+        above and lose the only thing the command is for."""
+        broken = tmp_path / "broken.json"
+        broken.write_text(json.dumps({"format": "wrong", "sensors": "not a list"}))
+        assert main(["check", str(broken)]) == EXIT_INCOMPLETE
+        said = capsys.readouterr().err
+        from cert_generator.certificate import validate_attestation
+        for problem in validate_attestation(json.loads(broken.read_text())):
+            assert problem in said, f"{problem!r} was not reported"
+
+    def test_both_verdicts_answer_the_same_question(self, tmp_path, paths,
+                                                    capsys):
+        """The clean line says the attestation IS well-formed. The refusal has
+        to negate that sentence rather than introduce a second word for it --
+        two vocabularies for one question is how a reader ends up unsure they
+        got the same answer twice."""
+        assert main(["check", paths["attestation"]]) == EXIT_CLEAN
+        clean = capsys.readouterr().out
+        broken = tmp_path / "broken.json"
+        broken.write_text(json.dumps({"format": "wrong"}))
+        assert main(["check", str(broken)]) == EXIT_INCOMPLETE
+        refused = capsys.readouterr().err
+        assert "well-formed" in clean
+        assert "well-formed" in refused, (
+            f"the refusal uses a different word for it: {refused.splitlines()[0]!r}")
