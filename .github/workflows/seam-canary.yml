@@ -1,18 +1,24 @@
 # One canary on the one seam this repository does not control.
 #
-# `bmc-sensor-audit` is pinned as a range, so any 0.1.x release lands in a
-# consumer's environment without this repository changing. That is the point of a
-# range and it is also the risk: the attestation format could gain a required key,
-# rename a count, or stop carrying a measurement's bound, and nothing here would
-# know until someone could not render a certificate.
+# `bmc-sensor-audit` is pinned as a range, so any release inside that range lands
+# in a consumer's environment without this repository changing. That is the point
+# of a range and it is also the risk: the attestation format could gain a required
+# key, rename a count, or stop carrying a measurement's bound, and nothing here
+# would know until someone could not render a certificate.
 #
 # So this installs the newest release inside the pin -- deliberately NOT a
-# lockfile -- and runs the seam tests against it every morning.
+# lockfile -- and runs the seam tests against it every morning. The range is READ
+# from this package's own metadata. Spelling it out here is what broke this
+# canary, and `tests/test_workflow_pins.py` now refuses it.
 #
 # Two repositories in this family have watched a workflow sit red-or-silent for
 # want of exactly this. The failure mode that matters is not the canary going red;
 # it is the canary quietly passing because it stopped checking. Hence
 # CERT_GENERATOR_REQUIRE_SEAM, which makes a skipped seam test a failure.
+#
+# There is a third mode, learned here: a canary red for a reason of its own. It
+# reads as an instrument doing its job, and it cannot report anything else while
+# it lasts, because the signal is already spent.
 
 name: seam-canary
 
@@ -44,7 +50,13 @@ jobs:
           set -euo pipefail
           python3 -m pip install --quiet --upgrade pip
           python3 -m pip install --quiet -e '.[dev]'
-          python3 -m pip install --quiet --upgrade 'bmc-sensor-audit[detect]>=0.1.0,<0.2'
+          # The RANGE comes from this package's own metadata and is never
+          # restated here. This line used to carry `>=0.1.0,<0.2`, which went on
+          # installing a 0.1.x referee after the package declared `>=0.2.0` --
+          # so the canary downgraded the referee below its own floor and then
+          # went red, every morning, at a combination it had assembled itself.
+          REQ="$(python3 -c 'from importlib.metadata import requires; print(next(r.split(";")[0].strip() for r in requires("odm-cert-generator") if r.split(";")[0].strip().startswith("bmc-sensor-audit")))')"
+          python3 -m pip install --quiet --upgrade "bmc-sensor-audit[detect]${REQ#bmc-sensor-audit}"
           echo "resolved:"
           python3 -m pip show bmc-sensor-audit | sed -n 's/^Version: /  referee /p'
           python3 -m pip show arbiter-engine   | sed -n 's/^Version: /  engine  /p'
