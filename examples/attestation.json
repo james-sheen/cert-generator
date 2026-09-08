@@ -1,5 +1,5 @@
 {
-  "format": "bmc-sensor-audit/attestation/1",
+  "format": "presence-audit/attestation/1",
   "target": "reference-board",
   "engine": {
     "schema_version": 1,

@@ -28,7 +28,12 @@ dependencies = [
     # referee refuses a command that asks to verify and not to verify at once,
     # instead of running unverified. A certificate rendered from a walk taken
     # over an unverified connection is a document nobody should rely on.
-    "bmc-sensor-audit>=0.2.0,<0.3",
+    # SPLIT UPSTREAM at bmc-sensor-audit 0.3.0. The attestation validator and
+    # its format string moved to `presence-audit`; the Redfish walk validator
+    # and the content handle stayed, because a walk is a BMC's. Two
+    # dependencies is the honest shape of that, not an accident of packaging.
+    "bmc-sensor-audit>=0.3.0,<0.4",
+    "presence-audit>=0.1.0,<0.2",
     "fpdf2>=2.7,<3",
 ]
 

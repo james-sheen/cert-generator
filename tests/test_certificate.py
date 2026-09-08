@@ -136,9 +136,21 @@ class TestTheRecordIdentifiesItself:
         assert certificate["format"] == CERTIFICATE_FORMAT
 
     def test_the_generator_and_source_are_recorded(self, certificate):
+        """The certificate records WHICH format its source was, and there are
+        two now.
+
+        The attestation moved to `presence-audit` at bmc-sensor-audit 0.3.0 and
+        the old name is still READ, so an artifact reaching this tool can
+        honestly declare either. Pinning one prefix asserted that only the
+        newer half of that promise existed. Taken from the accepted set rather
+        than restated, so the pin cannot outlive a change to it -- and it stays
+        a real assertion, because an unrecognised format is still refused.
+        """
+        from presence_audit.attestation import ACCEPTED_ATTESTATION_FORMATS
+
         assert certificate["generator"]["name"] == "odm-cert-generator"
-        assert certificate["source"]["attestation_format"].startswith(
-            "bmc-sensor-audit/attestation/")
+        assert certificate["source"]["attestation_format"] in \
+            ACCEPTED_ATTESTATION_FORMATS, certificate["source"]
         assert certificate["source"]["engine_schema_version"] == 1
 
     def test_the_timestamp_can_be_pinned(self, attestation, identity):

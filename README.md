@@ -24,7 +24,8 @@ staged content it has not read.
 0.1.2 lets a certificate name the capture it was judged from. The audit tool
 refuses to hold unit identity and this package holds nothing else, so the
 binding between them has to happen on content — and a content handle is what
-`bmc-sensor-audit` 0.1.1 supplies. Needs that version.
+the audit tool supplies. The version that does is the floor in `pyproject.toml`,
+not a number repeated here.
 
 **The distribution and the command differ, and the reason is worth one line.**
 PyPI ultranormalises a name by stripping its separators, so `cert-generator`

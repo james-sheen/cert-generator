@@ -34,8 +34,14 @@ PACKAGE = Path(__file__).resolve().parent.parent / "src" / "cert_generator"
 # same category: a validator and a digest both CONSUME an artifact and construct
 # nothing. A guard written from the spelling of its first instance refuses the
 # second one for being new rather than for being wrong.
+#
+# TWO UPSTREAM PACKAGES since bmc-sensor-audit 0.3.0, and the guard has to see
+# both or it stops being a guard. The attestation moved to `presence-audit`
+# when everything that was never about a BMC was split out of the audit tool.
+# Keying this on one distribution's name would have let the moved import in
+# unexamined -- the boundary would still be drawn, around half the surface.
 ALLOWED = {
-    "bmc_sensor_audit.detect.attestation": {
+    "presence_audit.attestation": {
         "validate_attestation": "the shipped validator for the input format",
         "ATTESTATION_FORMAT": "the format string, so it is not restated here",
     },
@@ -56,17 +62,23 @@ def _sources():
     return sorted(PACKAGE.rglob("*.py"))
 
 
+#: The upstream packages this one is allowed to reach into at all. Named here
+#: rather than inline so the scanner and the allowlist cannot disagree about
+#: which surface is being policed.
+UPSTREAM = ("bmc_sensor_audit", "presence_audit")
+
+
 def _imports_of_the_tool(tree: ast.AST):
-    """Every reference to `bmc_sensor_audit`, as (module, names, lineno)."""
+    """Every reference to an upstream package, as (module, names, lineno)."""
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
-            if node.module and node.module.split(".")[0] == "bmc_sensor_audit":
+            if node.module and node.module.split(".")[0] in UPSTREAM:
                 found.append((node.module,
                               [a.name for a in node.names], node.lineno))
         elif isinstance(node, ast.Import):
             for alias in node.names:
-                if alias.name.split(".")[0] == "bmc_sensor_audit":
+                if alias.name.split(".")[0] in UPSTREAM:
                     found.append((alias.name, ["<module>"], node.lineno))
     return found
 
@@ -130,7 +142,7 @@ class TestTheGeneratorReachesOnlyForReadOnlySurfaces:
         for path in _sources():
             tree = ast.parse(path.read_text(encoding="utf-8"))
             for module, names, _ in _imports_of_the_tool(tree):
-                if (module == "bmc_sensor_audit.detect.attestation"
+                if (module == "presence_audit.attestation"
                         and "validate_attestation" in names):
                     seen = True
         assert seen, ("no module imports validate_attestation; the certificate "

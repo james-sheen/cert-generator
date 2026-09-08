@@ -1,6 +1,6 @@
 # Where these came from
 
-Both artifacts are real output from `bmc-sensor-audit 0.1.0`, not hand-written
+Both artifacts are real output from `bmc-sensor-audit`, not hand-written
 shapes. A fixture written by hand to match a format is a fixture that agrees with
 whatever the author believed the format was — and the whole reason this package
 validates its input with the tool's own validator is that believing is not
@@ -29,7 +29,14 @@ bmc-sensor-audit coverage --config board.json --target $URL --json
 
 `tests/test_seam.py` reproduces the first of those end to end against whichever
 version of the audit tool is installed, which is how a format change inside the
-`>=0.1.0,<0.2` pin gets noticed here rather than at a customer.
+declared pin gets noticed here rather than at a customer. The pin itself is not
+restated here: a version written in prose is a version that goes stale, and this
+sentence has done so once already.
+
+`attestation.json` was regenerated at `bmc-sensor-audit` 0.3.0, which moved the
+attestation into `presence-audit` and renamed its format with it. Every other
+field came out byte-identical, which is the measurement behind reading the old
+name as well as the new: the document did not change when the package did.
 
 ## Two fields in `coverage.json` were replaced, and only two
 

@@ -38,8 +38,12 @@ try:
     # The referee's *shipped* validators, not copies of its rules. A second
     # implementation of one format is a second implementation that will drift,
     # and the tool ships these precisely so a recipient can run them.
-    from bmc_sensor_audit.detect.attestation import (ATTESTATION_FORMAT,
-                                                     validate_attestation)
+    # TWO packages now, and the split is not arbitrary: the attestation format
+    # is a presence audit's, and a Redfish walk is a BMC's. `bmc-sensor-audit`
+    # 0.3.0 moved everything that was never about a BMC into `presence-audit`,
+    # so the import that was one line is the seam between two domains.
+    from presence_audit.attestation import (ATTESTATION_FORMAT,
+                                            validate_attestation)
     from bmc_sensor_audit.inventory.redfish import validate_walk, walk_digest
 except ImportError as error:                                 # pragma: no cover
     # The requirement is DERIVED from this package's own metadata, never
@@ -47,18 +51,24 @@ except ImportError as error:                                 # pragma: no cover
     # string said `>=0.1.1,<0.2` while pyproject.toml said something else, and
     # the only reader who ever sees this line is somebody already stuck.
     def _declared() -> str:
+        wanted = ("presence-audit", "bmc-sensor-audit")
         try:
             from importlib.metadata import requires
+            found = []
             for req in requires("odm-cert-generator") or ():
-                if req.split(";")[0].strip().startswith("bmc-sensor-audit"):
-                    return req.split(";")[0].strip()
+                head = req.split(";")[0].strip()
+                if head.startswith(wanted):
+                    found.append(head)
+            if found:
+                return " ".join(f"'{f}'" for f in found)
         except Exception:                                    # pragma: no cover
             pass
-        return "bmc-sensor-audit"
+        return " ".join(f"'{w}'" for w in wanted)
     raise ImportError(
-        "cert-generator validates its input with the audit tool's own "
-        "validate_attestation and walk_digest, so bmc-sensor-audit must be "
-        f"installed: pip install '{_declared()}'") from error
+        "cert-generator validates its input with the shipped validators rather "
+        "than copies of them, so both packages must be installed -- the "
+        "attestation format is a presence audit's and the walk is a BMC's: "
+        f"pip install {_declared()}") from error
 
 __all__ = ["CertificateError", "Capture", "build_certificate",
            "capture_from_walk", "capture_from_digest", "ATTESTATION_FORMAT"]

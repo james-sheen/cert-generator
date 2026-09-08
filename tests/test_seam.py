@@ -139,3 +139,44 @@ class TestAFreshlyProducedArtifactStillRenders:
             assert req.specifier.contains(installed, prereleases=True), (
                 f"bmc-sensor-audit {installed} is installed and this package "
                 f"declares {req}; the environment and the metadata disagree")
+
+
+class TestAnArtifactWrittenBeforeTheSplitStillRenders:
+    """The compatibility promise this tool inherits, and nobody else asserts.
+
+    `bmc-sensor-audit` 0.3.0 moved the attestation to `presence-audit` and the
+    format name moved with it. The old name is still READ, deliberately: the
+    shape did not change when the package did, so an artifact already on disk
+    is still exactly the same document and refusing it would be inventing an
+    incompatibility to match a rename.
+
+    That promise is made upstream and CONSUMED here -- this is the tool that
+    holds somebody's older attestation and has to render it. A test upstream
+    can show the validator accepts the name; only this one shows a certificate
+    still comes out.
+    """
+
+    def test_the_old_format_name_is_still_accepted(self, attestation, identity):
+        from cert_generator.certificate import build_certificate, validate_attestation
+
+        old = dict(attestation)
+        old["format"] = "bmc-sensor-audit/attestation/1"
+        assert validate_attestation(old) == [], (
+            "an attestation written before the split was refused")
+
+        certificate = build_certificate(old, identity)
+        assert certificate["source"]["attestation_format"] == \
+            "bmc-sensor-audit/attestation/1", (
+            "the certificate must record the format it was GIVEN, not the one "
+            "this build happens to emit -- that field is provenance")
+
+    def test_an_unknown_format_is_still_refused(self, attestation, identity):
+        """Non-vacuity: the acceptance widened by exactly one name, not into a
+        wildcard. A tool that rendered a certificate from a document it did not
+        understand is the failure the format id exists to prevent."""
+        from cert_generator.certificate import validate_attestation
+
+        stranger = dict(attestation)
+        stranger["format"] = "something-else/attestation/1"
+        assert validate_attestation(stranger) != [], (
+            "an unrecognised attestation format was accepted")
