@@ -231,7 +231,8 @@ the field that is not on it.
 
 ```
 arbiter-engine        the invariant envelope
-bmc-sensor-audit      the referee: declaration diff, liveness, attestation
+presence-audit        the attestation format, and the validator for it
+bmc-sensor-audit      the referee: the walk, and the handle for it
 cert-generator        this: identity, and the honest certificate
 ```
 

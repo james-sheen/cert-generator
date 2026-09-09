@@ -293,3 +293,52 @@ class TestNothingNamesTheCommandAsADistribution:
         nothing asserts an absence over nothing."""
         scanned = list(self._shipped())
         assert len(scanned) >= 6, f"only {len(scanned)} file(s) scanned"
+
+
+class TestTheStackDiagramNamesEveryUpstream:
+    """The picture of where this sits, held to the packages it actually reads.
+
+    When the attestation moved out of the audit tool into `presence-audit`, the
+    dependency list grew, the imports moved and the boundary guard was widened
+    to see both -- and the diagram went on crediting one package with a
+    validator it no longer ships. Nothing could say so: no check had ever read
+    that block, and both spellings look right in isolation. It shipped to an
+    index that way.
+
+    The subject is DERIVED from `test_boundary.ALLOWED`, which is the reviewed
+    record of what this package is permitted to import and is already enforced
+    against the source. A second list here would be a second thing to update,
+    and the first one to go stale would be the copy nobody imports.
+    """
+
+    HEADING = "## Where it sits"
+
+    def _diagram(self) -> str:
+        readme = README.read_text(encoding="utf-8")
+        assert self.HEADING in readme, (
+            f"the README has no {self.HEADING!r} section, so this guard has "
+            "nothing to read; move it or delete it, do not leave it passing")
+        after = readme.split(self.HEADING, 1)[1]
+        opened = after.index("```") + 3
+        return after[opened:after.index("```", opened)]
+
+    def _upstreams(self) -> set[str]:
+        from test_boundary import ALLOWED
+        return {module.split(".")[0].replace("_", "-") for module in ALLOWED}
+
+    def test_there_is_something_to_check(self):
+        """Both halves. An empty permitted set satisfies every claim below, and
+        so does a diagram this cannot find."""
+        assert len(self._upstreams()) >= 2, (
+            "fewer than two upstream packages were derived; this guard was "
+            "written for a split across two and proves nothing about one")
+        assert self._diagram().strip(), "the diagram block is empty"
+
+    def test_every_upstream_is_in_the_diagram(self):
+        diagram = self._diagram()
+        missing = sorted(d for d in self._upstreams() if d not in diagram)
+        assert not missing, (
+            f"this package imports from {', '.join(missing)} and the diagram "
+            f"does not name it; a reader is told the stack is smaller than it "
+            f"is. The diagram may name more than this -- `arbiter-engine` is "
+            f"there and is not imported -- but never less")
