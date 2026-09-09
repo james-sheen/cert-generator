@@ -45,30 +45,58 @@ try:
     from presence_audit.attestation import (ATTESTATION_FORMAT,
                                             validate_attestation)
     from bmc_sensor_audit.inventory.redfish import validate_walk, walk_digest
-except ImportError as error:                                 # pragma: no cover
-    # The requirement is DERIVED from this package's own metadata, never
-    # restated. It was restated once and went stale at the next release: the
-    # string said `>=0.1.1,<0.2` while pyproject.toml said something else, and
-    # the only reader who ever sees this line is somebody already stuck.
-    def _declared() -> str:
-        wanted = ("presence-audit", "bmc-sensor-audit")
+except ImportError as error:
+    # The requirement is DERIVED, never restated. It was restated once and went
+    # stale at the next release: the string said `>=0.1.1,<0.2` while
+    # pyproject.toml said something else, and the only reader who ever sees this
+    # line is somebody already stuck.
+    #
+    # Derived from TWO measurements now, because one was not enough. WHICH
+    # package is missing comes off the exception, not off a tuple written here
+    # -- that tuple named both every time, so the advice could recommend the
+    # package that was already installed. The VERSION comes from the metadata,
+    # and only when the metadata is describing this program: `importlib
+    # .metadata` reports the wheel installed under this name, which need not be
+    # the code running. A checkout ahead of its own release reads its
+    # predecessor's dependencies.
+    #
+    # Not hypothetical. The published 0.2.1 declares one dependency while this
+    # tree needs two, so a downstream canary running this source against that
+    # wheel was told to install `bmc-sensor-audit` when `presence_audit` was
+    # what had not imported: advice a reader can follow to completion and still
+    # be stuck, which is worse than an admission. Every branch below is
+    # exercised by tests/test_the_advice_when_a_validator_is_missing.py -- this
+    # block carried `no cover` while it was wrong, and nothing could say so.
+    def _normalise(name: str) -> str:
+        return re.sub(r"[-_.]+", "-", name).lower()
+
+    def _advice(module: str) -> str:
+        distribution = _normalise(module)
         try:
             from importlib.metadata import requires
-            found = []
-            for req in requires("odm-cert-generator") or ():
-                head = req.split(";")[0].strip()
-                if head.startswith(wanted):
-                    found.append(head)
-            if found:
-                return " ".join(f"'{f}'" for f in found)
-        except Exception:                                    # pragma: no cover
-            pass
-        return " ".join(f"'{w}'" for w in wanted)
+            declared = [req.partition(";")[0].strip()
+                        for req in requires("odm-cert-generator") or ()]
+        except Exception:
+            declared = []
+        for requirement in declared:
+            named = re.match(r"[A-Za-z0-9._-]+", requirement)
+            if named and _normalise(named.group()) == distribution:
+                return f"pip install '{requirement}'"
+        if declared:
+            return (f"pip install {distribution} -- with no version, because "
+                    f"the installed odm-cert-generator does not require it: "
+                    f"this code is ahead of that metadata, so the range is not "
+                    f"knowable from here")
+        return f"pip install {distribution}"
+
+    _missing = (getattr(error, "name", "") or "").partition(".")[0]
     raise ImportError(
         "cert-generator validates its input with the shipped validators rather "
-        "than copies of them, so both packages must be installed -- the "
-        "attestation format is a presence audit's and the walk is a BMC's: "
-        f"pip install {_declared()}") from error
+        "than copies of them -- the attestation format is a presence audit's "
+        "and the walk is a BMC's. "
+        + (f"{_missing} did not import: {_advice(_missing)}" if _missing else
+           "one of them did not import, and the failure does not say which; "
+           "reinstall this tool with its dependencies")) from error
 
 __all__ = ["CertificateError", "Capture", "build_certificate",
            "capture_from_walk", "capture_from_digest", "ATTESTATION_FORMAT"]
