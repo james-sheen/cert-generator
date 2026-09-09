@@ -3,8 +3,15 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.2.1**, tagged `v0.2.1`, Apache-2.0, on PyPI as
+**Released — 0.2.2**, tagged `v0.2.2`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+**0.2.2 takes the attestation from `presence-audit`.** `bmc-sensor-audit`
+0.3.0 moved everything that was never about a BMC into a separate package;
+the attestation validator and its format name went with it, the Redfish walk
+validator did not. Two dependencies now, and the referee floor rises with
+them. The message you get when one is missing names the one that is missing,
+which it did not.
 
 **0.2.1 says what the problem list is.** `check` printed each problem indented
 under no header, so the first line an operator read began with whitespace and
