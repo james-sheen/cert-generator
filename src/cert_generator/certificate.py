@@ -34,6 +34,37 @@ from . import CERTIFICATE_FORMAT, __version__
 from . import coverage as coverage_module
 from .identity import Identity
 
+def _normalise(name: str) -> str:
+    return re.sub(r"[-_.]+", "-", name).lower()
+
+
+def _advice(module: str) -> str:
+    """How to install the distribution a module came from, DERIVED.
+
+    Module scope now, because TWO refusals need it: the attestation validators
+    are imported here and the walk validators where they are called. Defined
+    inside one of those handlers it existed only when that handler ran, and the
+    other would have raised NameError while trying to explain itself.
+    """
+    distribution = _normalise(module)
+    try:
+        from importlib.metadata import requires
+        declared = [req.partition(";")[0].strip()
+                    for req in requires("odm-cert-generator") or ()]
+    except Exception:
+        declared = []
+    for requirement in declared:
+        named = re.match(r"[A-Za-z0-9._-]+", requirement)
+        if named and _normalise(named.group()) == distribution:
+            return f"pip install '{requirement}'"
+    if declared:
+        return (f"pip install {distribution} -- with no version, because "
+                f"the installed odm-cert-generator does not require it: "
+                f"this code is ahead of that metadata, so the range is not "
+                f"knowable from here")
+    return f"pip install {distribution}"
+
+
 try:
     # The referee's *shipped* validators, not copies of its rules. A second
     # implementation of one format is a second implementation that will drift,
@@ -44,7 +75,6 @@ try:
     # so the import that was one line is the seam between two domains.
     from presence_audit.attestation import (ATTESTATION_FORMAT,
                                             validate_attestation)
-    from bmc_sensor_audit.inventory.redfish import validate_walk, walk_digest
 except ImportError as error:
     # The requirement is DERIVED, never restated. It was restated once and went
     # stale at the next release: the string said `>=0.1.1,<0.2` while
@@ -67,28 +97,6 @@ except ImportError as error:
     # be stuck, which is worse than an admission. Every branch below is
     # exercised by tests/test_the_advice_when_a_validator_is_missing.py -- this
     # block carried `no cover` while it was wrong, and nothing could say so.
-    def _normalise(name: str) -> str:
-        return re.sub(r"[-_.]+", "-", name).lower()
-
-    def _advice(module: str) -> str:
-        distribution = _normalise(module)
-        try:
-            from importlib.metadata import requires
-            declared = [req.partition(";")[0].strip()
-                        for req in requires("odm-cert-generator") or ()]
-        except Exception:
-            declared = []
-        for requirement in declared:
-            named = re.match(r"[A-Za-z0-9._-]+", requirement)
-            if named and _normalise(named.group()) == distribution:
-                return f"pip install '{requirement}'"
-        if declared:
-            return (f"pip install {distribution} -- with no version, because "
-                    f"the installed odm-cert-generator does not require it: "
-                    f"this code is ahead of that metadata, so the range is not "
-                    f"knowable from here")
-        return f"pip install {distribution}"
-
     _missing = (getattr(error, "name", "") or "").partition(".")[0]
     raise ImportError(
         "cert-generator validates its input with the shipped validators rather "
@@ -122,6 +130,33 @@ class Capture:
     verified: bool
 
 
+def _walk_validators():
+    """The BMC package's two, imported where they are USED.
+
+    THE ONLY PLACE EITHER IS CALLED. Both sat at module scope, so every path
+    through this tool needed `bmc-sensor-audit` installed -- including `render
+    --walk-digest`, which reads no walk, and `build_certificate`, which reads
+    `capture.digest` off a dataclass and never calls the digest function at all.
+    A second vertical would use `--walk-digest` for every render and would have
+    installed a BMC package to do it.
+
+    The seam the module-scope comment describes is real and unchanged: the
+    attestation format is a presence audit's, and a walk is a BMC's. What moves
+    is WHEN the BMC half is required -- by the one function that reads a BMC
+    walk, rather than by importing this module. The refusal is the same advice,
+    derived the same way.
+    """
+    try:
+        from bmc_sensor_audit.inventory.redfish import validate_walk, walk_digest
+    except ImportError as error:
+        missing = (getattr(error, "name", "") or "").partition(".")[0] or "bmc_sensor_audit"
+        raise ImportError(
+            f"reading a walk needs the audit tool's own walk validator and "
+            f"content handle, rather than a second copy of its rules: "
+            f"{missing} did not import: {_advice(missing)}") from error
+    return validate_walk, walk_digest
+
+
 def capture_from_walk(path: str | Path) -> Capture:
     """Read the walk and compute its handle with the audit tool's own function.
 
@@ -142,6 +177,7 @@ def capture_from_walk(path: str | Path) -> Capture:
     except ValueError as error:
         raise CertificateError(
             f"{path} is not parseable as JSON: {error}") from None
+    validate_walk, walk_digest = _walk_validators()
     problems = validate_walk(payload)
     if problems:
         raise CertificateError(

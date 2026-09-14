@@ -33,7 +33,8 @@ import pytest
 SRC = Path(__file__).resolve().parent.parent / "src"
 
 # Blocks one module at the import hook, optionally lies about this
-# distribution's metadata, and prints whatever the import raised.
+# distribution's metadata, and prints whatever refusal that provoked -- from the
+# import for the attestation half, and from reading a walk for the BMC half.
 PROBE = '''
 import sys
 
@@ -67,7 +68,16 @@ try:
 except ImportError as error:
     print(str(error))
 else:
-    print("NOTHING WAS RAISED")
+    # THE BMC HALF REFUSES WHERE IT IS USED, not at import. Both validators are
+    # called in the one function that reads a walk, so importing this module no
+    # longer needs that package -- which is the whole point of the change and
+    # would otherwise read here as *the advice stopped being given*.
+    try:
+        cert_generator.certificate._walk_validators()
+    except ImportError as error:
+        print(str(error))
+    else:
+        print("NOTHING WAS RAISED")
 '''
 
 # What a current install declares, and what the published 0.2.1 declared: one
