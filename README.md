@@ -3,8 +3,14 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.2.3**, tagged `v0.2.3`, Apache-2.0, on PyPI as
+**Released — 0.2.4**, tagged `v0.2.4`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+**0.2.4 is a source distribution its own suite runs from.** 0.2.3's sdist carried
+`tests/` and not the hygiene and commit-message tools two of those tests import, so
+anyone running the suite from it -- a distribution packager, a reviewer -- got two
+collection errors and no tests. It now carries the whole tracked tree. Nothing the
+wheel installs changed except the version.
 
 **0.2.3 needs the BMC half where a walk is read, not at import.** Both symbols
 this tool takes from the audit package are called in `capture_from_walk` and
