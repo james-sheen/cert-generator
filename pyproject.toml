@@ -33,7 +33,10 @@ dependencies = [
     # and the content handle stayed, because a walk is a BMC's. Two
     # dependencies is the honest shape of that, not an accident of packaging.
     "bmc-sensor-audit>=0.3.0,<0.4",
-    "presence-audit>=0.1.0,<0.2",
+    # 0.1.13 is the first core whose validator reads format 2, which a producer
+    # writes once it names its subject `point`; 0.2.0 writes only that, and was
+    # run against before the ceiling admitted it.
+    "presence-audit>=0.1.13,<0.3",
     "fpdf2>=2.7,<3",
 ]
 

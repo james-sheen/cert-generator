@@ -36,6 +36,12 @@ class RenderError(ValueError):
     """The certificate could not be drawn."""
 
 
+def _subject(row: dict) -> str:
+    """What a row is about: the core's `point` from `presence-audit` 0.1.13 on,
+    and the `sensor` key a format-1 artifact and this tool's own summary carry."""
+    return str(row.get("point", row.get("sensor", "?")))
+
+
 def _number(value: Any) -> str:
     """A scalar as it appears in the JSON, so text comparison is meaningful."""
     if value is None:
@@ -117,7 +123,7 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
     if judgment["findings"]:
         heading("Findings", size=10)
         for finding in judgment["findings"]:
-            bullet(f"{finding.get('sensor', '?')} "
+            bullet(f"{_subject(finding)} "
                    f"[{finding.get('axiom', '?')}, "
                    f"{finding.get('severity', 'unrated')}] "
                    f"{finding.get('statement', '')}")
@@ -128,13 +134,13 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
             measurement = entry.get("measurement") or {}
             parts = [f"{key} {_number(value)}"
                      for key, value in measurement.items()]
-            bullet(f"{entry.get('sensor', '?')}: " + ", ".join(parts))
+            bullet(f"{_subject(entry)}: " + ", ".join(parts))
 
     if judgment["declined"]:
         heading(f"Declined -- asked, not answered, and why "
                 f"({_number(judgment['declined_count'])})", size=10)
         for decline in judgment["declined"]:
-            bullet(f"{decline.get('sensor', '?')} [{decline.get('axiom', '?')}] "
+            bullet(f"{_subject(decline)} [{decline.get('axiom', '?')}] "
                    f"{decline.get('reason', 'no reason given')}"
                    + (f" -- {decline['detail']}" if decline.get("detail") else ""))
 
@@ -154,7 +160,7 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
         row("Declared, absent", _number(diff.get("declared_absent")))
         row("Walk complete", _number(diff.get("walk_complete")))
         for finding in diff.get("findings", []):
-            bullet(f"{finding.get('sensor', '?')}: {finding.get('statement', '')}")
+            bullet(f"{_subject(finding)}: {finding.get('statement', '')}")
     else:
         bullet(str(diff.get("reason", "")))
 

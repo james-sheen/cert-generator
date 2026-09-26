@@ -3,8 +3,14 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.2.4**, tagged `v0.2.4`, Apache-2.0, on PyPI as
+**Released — 0.2.5**, tagged `v0.2.5`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+**0.2.5 reads an attestation that names its subject `point`.** `presence-audit`
+0.1.13 renamed the core's subject, and a producer that has moved writes format 2,
+keyed on `point`. Each finding, measurement and decline is named by `point` first
+and by `sensor` second, so format 1 renders as it did. Requires
+`presence-audit>=0.1.13,<0.3`.
 
 **0.2.4 is a source distribution its own suite runs from.** 0.2.3's sdist carried
 `tests/` and not the hygiene and commit-message tools two of those tests import, so

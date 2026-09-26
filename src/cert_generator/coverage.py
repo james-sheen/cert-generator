@@ -101,7 +101,9 @@ def summarise(raw: dict) -> dict:
             continue
         kind = finding.get("kind")
         findings.append({
-            "sensor": finding.get("sensor", "?"),
+            # This summary names the subject in the certificate's own word; the
+            # report it reads says `point` from the core's 0.1.13, `sensor` before.
+            "sensor": finding.get("point", finding.get("sensor", "?")),
             "kind": kind,
             "statement": _KINDS.get(kind) or finding.get("detail")
                          or f"reported as {kind!r}",

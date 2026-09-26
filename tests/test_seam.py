@@ -44,11 +44,17 @@ CONFIG = {
 
 
 class TestTheCheckedInExampleStillMatchesTheInstalledTool:
-    def test_the_format_constant_has_not_moved(self, attestation):
-        assert attestation["format"] == ATTESTATION_FORMAT, (
-            "the installed audit tool declares a different attestation format "
-            "than examples/attestation.json was produced under; the pin range "
-            "let a new format in")
+    def test_the_example_is_a_format_the_installed_core_reads(self, attestation):
+        """The range admits a core that writes format 2 by default, so the
+        example, written as format 1, is held to what the installed core READS
+        rather than to the one id it writes. Taken from the core's own set, so
+        the pin cannot outlive a change to it."""
+        from presence_audit.attestation import ACCEPTED_ATTESTATION_FORMATS
+
+        assert attestation["format"] in ACCEPTED_ATTESTATION_FORMATS, (
+            "the installed core no longer reads the format examples/attestation.json "
+            "was produced under; the pin range let a reader in that refuses it")
+        assert ATTESTATION_FORMAT in ACCEPTED_ATTESTATION_FORMATS
 
     def test_the_installed_validator_still_accepts_it(self, attestation):
         from cert_generator.certificate import validate_attestation
