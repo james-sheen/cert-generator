@@ -61,8 +61,13 @@ packages = ["src/cert_generator"]
 # The sdist is built from the working tree, and the working tree is not the
 # repository. The sibling repo published four untracked files this way; naming
 # what belongs in the archive is cheaper than discovering what does not.
-include = ["src/", "tests/", "examples/", "README.md", "LICENSE", "NOTICE",
-           "pyproject.toml"]
+#
+# AND IT SHIPS WHAT ITS OWN TESTS READ. `tests/` was in it and the hygiene and
+# commit-message tools those tests import were not, so 0.2.3's suite stopped at
+# collection with two errors: nothing ran from the artifact. The list is now the
+# whole tracked tree, so a test reading any tracked file finds it in the sdist.
+include = ["src/", "tests/", "examples/", "tools/", ".github/", ".githooks/",
+           "README.md", "SECURITY.md", "LICENSE", "NOTICE", "pyproject.toml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
