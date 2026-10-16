@@ -10,7 +10,20 @@ The rule is kept by construction rather than by care: every number reaches the
 page through `_number`, which formats it from the JSON value's own string form. A
 threshold stored as `80.0` prints as `80.0` and not as `80`, because `80` is a
 different string and a checker comparing text has no way to know it was the same
-measurement.
+measurement. The one number the record cannot carry is the page's own -- *page 2
+of 3* -- and `verify` checks those as layout, against the document they are in.
+
+## Every section, on as many pages as it takes
+
+Up to 0.2.5 a certificate was one page with page breaks turned off, so that one
+which overflowed would show it. It did not show. With 26 findings the library
+drew the rest of the page below its bottom edge, where no viewer or printer shows
+anything -- and what fell off first was the section a certificate exists to carry,
+*Not part of this judgment*, with every declared sensor that was absent. So page
+breaks are on, each page names the unit and says which page of how many it is, so
+a page parted from the rest still says what it belongs to, and page one states
+declared against absent beside the scope, where it cannot be the part that falls
+off.
 
 ## A limit, stated rather than worked around
 
@@ -30,6 +43,12 @@ __all__ = ["RenderError", "render_pdf"]
 
 _MARGIN = 15
 _LINE = 5.0
+_FOOTER = 8          # the band above the bottom margin that the page line takes
+
+
+def footer_line(serial: str, page: int, pages: int | str) -> str:
+    """What the foot of every page says. `verify` reads it back in this shape."""
+    return f"Certificate for {serial} -- page {page} of {pages}"
 
 
 class RenderError(ValueError):
@@ -75,11 +94,18 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
 
     _renderable(certificate)
 
-    pdf = FPDF(format="A4", unit="mm")
-    # Deliberately off. Auto page breaks would silently push content onto a second
-    # page, and the projection test reads page one; a certificate that overflows
-    # should be visible as overflow, not quietly paginated.
-    pdf.set_auto_page_break(auto=False, margin=_MARGIN)
+    serial = certificate["identity"]["serial"]
+
+    class Certificate(FPDF):
+        def footer(self) -> None:
+            self.set_y(-(_MARGIN + _FOOTER) + 2)
+            self.set_font("Helvetica", "", 7)
+            self.cell(0, 4, footer_line(serial, self.page_no(), "{nb}"), align="C")
+
+    pdf = Certificate(format="A4", unit="mm")
+    # On, with room kept for the page line. Off -- as it was to 0.2.5 -- the library
+    # does not stop at the edge: it draws past it, and nothing on the page says so.
+    pdf.set_auto_page_break(auto=True, margin=_MARGIN + _FOOTER)
     pdf.set_margins(_MARGIN, _MARGIN, _MARGIN)
     pdf.add_page()
     width = pdf.w - 2 * _MARGIN
@@ -102,6 +128,7 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
 
     judgment = certificate["judgment"]
     left_out = certificate["not_part_of_this_judgment"]
+    diff = left_out["declaration_diff"]
 
     pdf.set_font("Helvetica", "B", 15)
     pdf.cell(width, 9, "Quality Control Certificate", new_x="LMARGIN",
@@ -119,6 +146,15 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
     heading("Judgment")
     row("Verdict", judgment["verdict"])
     row("Scope", judgment["statement"])
+    # Beside the scope, on page one: the smaller denominator must never be the
+    # only one a reader sees, and this is the line that cannot fall off.
+    if diff.get("present"):
+        row("Declared", f"{_number(diff.get('declared'))} declared; "
+                        f"{_number(diff.get('matched'))} matched on the machine; "
+                        f"{_number(diff.get('declared_absent'))} declared and absent, "
+                        f"each one named further on")
+    else:
+        row("Declared", str(diff.get("reason", "")))
 
     if judgment["findings"]:
         heading("Findings", size=10)
@@ -153,7 +189,6 @@ def render_pdf(certificate: dict, path: str | Path) -> Path:
                    new_x="LMARGIN", new_y="NEXT")
     pdf.ln(1)
 
-    diff = left_out["declaration_diff"]
     if diff.get("present"):
         row("Declared sensors", _number(diff.get("declared")))
         row("Matched on the machine", _number(diff.get("matched")))

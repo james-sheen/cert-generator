@@ -1,0 +1,1064 @@
+{
+  "format": "presence-audit/attestation/2",
+  "target": "walk_qemu_bletchley.json",
+  "engine": {
+    "schema_version": 1,
+    "boundary": "engine-side evidence only; production attestation records are v0.2"
+  },
+  "checked": {
+    "invariants": 56,
+    "entities": 28
+  },
+  "findings": [
+    {
+      "point": "P12V_AUX",
+      "sensor": "P12V_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P12V_AUX is at or above its upper critical bound of 12.61"
+    },
+    {
+      "point": "P3V3_AUX",
+      "sensor": "P3V3_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P3V3_AUX is at or above its upper critical bound of 3.475"
+    },
+    {
+      "point": "P5V_AUX",
+      "sensor": "P5V_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P5V_AUX is at or above its upper critical bound of 5.26"
+    },
+    {
+      "point": "P3V_BAT",
+      "sensor": "P3V_BAT",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P3V_BAT is at or above its upper critical bound of 3.475"
+    },
+    {
+      "point": "P2V5_AUX",
+      "sensor": "P2V5_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P2V5_AUX is at or above its upper critical bound of 2.76"
+    },
+    {
+      "point": "P1V8_AUX",
+      "sensor": "P1V8_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P1V8_AUX is at or above its upper critical bound of 1.9"
+    },
+    {
+      "point": "P1V2_AUX",
+      "sensor": "P1V2_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P1V2_AUX is at or above its upper critical bound of 1.27"
+    },
+    {
+      "point": "P1V0_AUX",
+      "sensor": "P1V0_AUX",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P1V0_AUX is at or above its upper critical bound of 1.06"
+    },
+    {
+      "point": "IMON_FAN0",
+      "sensor": "IMON_FAN0",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "IMON_FAN0 is at or above its upper critical bound of 15.0"
+    },
+    {
+      "point": "IMON_FAN1",
+      "sensor": "IMON_FAN1",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "IMON_FAN1 is at or above its upper critical bound of 15.0"
+    },
+    {
+      "point": "IMON_FAN3",
+      "sensor": "IMON_FAN3",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "IMON_FAN3 is at or above its upper critical bound of 15.0"
+    },
+    {
+      "point": "P12V_FAN1",
+      "sensor": "P12V_FAN1",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P12V_FAN1 is at or above its upper critical bound of 13.2"
+    },
+    {
+      "point": "P12V_FAN3",
+      "sensor": "P12V_FAN3",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "threshold_exceeded:reading",
+      "statement": "P12V_FAN3 is at or above its upper critical bound of 13.2"
+    },
+    {
+      "point": "MB_U73_THERM_LOCAL",
+      "sensor": "MB_U73_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "MB_U73_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "MB_U73_THERM_REMOTE",
+      "sensor": "MB_U73_THERM_REMOTE",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "MB_U73_THERM_REMOTE is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "MB_U72_THERM_LOCAL",
+      "sensor": "MB_U72_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "MB_U72_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "MB_U72_THERM_REMOTE",
+      "sensor": "MB_U72_THERM_REMOTE",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "MB_U72_THERM_REMOTE is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "MB_U402_THERM_LOCAL",
+      "sensor": "MB_U402_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "MB_U402_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "MB_U19_THERM_LOCAL",
+      "sensor": "MB_U19_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "MB_U19_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "SLED1_THERM_LOCAL",
+      "sensor": "SLED1_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "SLED1_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "SLED2_THERM_LOCAL",
+      "sensor": "SLED2_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "SLED2_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "SLED3_THERM_LOCAL",
+      "sensor": "SLED3_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "SLED3_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "SLED4_THERM_LOCAL",
+      "sensor": "SLED4_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "SLED4_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "SLED5_THERM_LOCAL",
+      "sensor": "SLED5_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "SLED5_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "SLED6_THERM_LOCAL",
+      "sensor": "SLED6_THERM_LOCAL",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "critical",
+      "problem_type": "below_critical_threshold:reading",
+      "statement": "SLED6_THERM_LOCAL is at or BELOW its lower critical bound of 0.0"
+    },
+    {
+      "point": "IMON_FAN2",
+      "sensor": "IMON_FAN2",
+      "entity_type": null,
+      "axiom": "BOUNDEDNESS",
+      "severity": "warning",
+      "problem_type": "threshold_warning:reading",
+      "statement": "IMON_FAN2 is at or above its upper warning bound of 10.0"
+    }
+  ],
+  "not_checked": [
+    {
+      "point": "P12V_AUX",
+      "sensor": "P12V_AUX",
+      "entity_type": "P12V_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P3V3_AUX",
+      "sensor": "P3V3_AUX",
+      "entity_type": "P3V3_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P5V_AUX",
+      "sensor": "P5V_AUX",
+      "entity_type": "P5V_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P3V_BAT",
+      "sensor": "P3V_BAT",
+      "entity_type": "P3V_BAT",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P2V5_AUX",
+      "sensor": "P2V5_AUX",
+      "entity_type": "P2V5_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P1V8_AUX",
+      "sensor": "P1V8_AUX",
+      "entity_type": "P1V8_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P1V2_AUX",
+      "sensor": "P1V2_AUX",
+      "entity_type": "P1V2_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P1V0_AUX",
+      "sensor": "P1V0_AUX",
+      "entity_type": "P1V0_AUX",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "IMON_FAN0",
+      "sensor": "IMON_FAN0",
+      "entity_type": "IMON_FAN0",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "IMON_FAN1",
+      "sensor": "IMON_FAN1",
+      "entity_type": "IMON_FAN1",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "IMON_FAN2",
+      "sensor": "IMON_FAN2",
+      "entity_type": "IMON_FAN2",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "IMON_FAN3",
+      "sensor": "IMON_FAN3",
+      "entity_type": "IMON_FAN3",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P12V_FAN0",
+      "sensor": "P12V_FAN0",
+      "entity_type": "P12V_FAN0",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P12V_FAN1",
+      "sensor": "P12V_FAN1",
+      "entity_type": "P12V_FAN1",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P12V_FAN2",
+      "sensor": "P12V_FAN2",
+      "entity_type": "P12V_FAN2",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "P12V_FAN3",
+      "sensor": "P12V_FAN3",
+      "entity_type": "P12V_FAN3",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "MB_U73_THERM_LOCAL",
+      "sensor": "MB_U73_THERM_LOCAL",
+      "entity_type": "MB_U73_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "MB_U73_THERM_REMOTE",
+      "sensor": "MB_U73_THERM_REMOTE",
+      "entity_type": "MB_U73_THERM_REMOTE",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "MB_U72_THERM_LOCAL",
+      "sensor": "MB_U72_THERM_LOCAL",
+      "entity_type": "MB_U72_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "MB_U72_THERM_REMOTE",
+      "sensor": "MB_U72_THERM_REMOTE",
+      "entity_type": "MB_U72_THERM_REMOTE",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "MB_U402_THERM_LOCAL",
+      "sensor": "MB_U402_THERM_LOCAL",
+      "entity_type": "MB_U402_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "MB_U19_THERM_LOCAL",
+      "sensor": "MB_U19_THERM_LOCAL",
+      "entity_type": "MB_U19_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "SLED1_THERM_LOCAL",
+      "sensor": "SLED1_THERM_LOCAL",
+      "entity_type": "SLED1_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "SLED2_THERM_LOCAL",
+      "sensor": "SLED2_THERM_LOCAL",
+      "entity_type": "SLED2_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "SLED3_THERM_LOCAL",
+      "sensor": "SLED3_THERM_LOCAL",
+      "entity_type": "SLED3_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "SLED4_THERM_LOCAL",
+      "sensor": "SLED4_THERM_LOCAL",
+      "entity_type": "SLED4_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "SLED5_THERM_LOCAL",
+      "sensor": "SLED5_THERM_LOCAL",
+      "entity_type": "SLED5_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    },
+    {
+      "point": "SLED6_THERM_LOCAL",
+      "sensor": "SLED6_THERM_LOCAL",
+      "entity_type": "SLED6_THERM_LOCAL",
+      "indicator": "reading",
+      "axiom": "STABILITY",
+      "reason": "insufficient_samples",
+      "detail": "too few observations to detect oscillation",
+      "measurement": {
+        "observations": 1,
+        "required": 10,
+        "window_seconds": 900.0,
+        "total_observations": 1
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "point": "P12V_AUX",
+      "sensor": "P12V_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 14.8985,
+        "threshold": 12.61,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P3V3_AUX",
+      "sensor": "P3V3_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 7.4706,
+        "threshold": 3.475,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P5V_AUX",
+      "sensor": "P5V_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 9.8366,
+        "threshold": 5.26,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P3V_BAT",
+      "sensor": "P3V_BAT",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 4.3133,
+        "threshold": 3.475,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P2V5_AUX",
+      "sensor": "P2V5_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 2.9317,
+        "threshold": 2.76,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P1V8_AUX",
+      "sensor": "P1V8_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 3.7017,
+        "threshold": 1.9,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P1V2_AUX",
+      "sensor": "P1V2_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 1.589,
+        "threshold": 1.27,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P1V0_AUX",
+      "sensor": "P1V0_AUX",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 2.744,
+        "threshold": 1.06,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "IMON_FAN0",
+      "sensor": "IMON_FAN0",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 16.25,
+        "threshold": 15.0,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "IMON_FAN1",
+      "sensor": "IMON_FAN1",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 28.29,
+        "threshold": 15.0,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "IMON_FAN3",
+      "sensor": "IMON_FAN3",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 26.24,
+        "threshold": 15.0,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P12V_FAN1",
+      "sensor": "P12V_FAN1",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 21.4,
+        "threshold": 13.2,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "P12V_FAN3",
+      "sensor": "P12V_FAN3",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_exceeded:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 21.672,
+        "threshold": 13.2,
+        "threshold_type": "critical",
+        "bound": "upper"
+      }
+    },
+    {
+      "point": "MB_U73_THERM_LOCAL",
+      "sensor": "MB_U73_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "MB_U73_THERM_REMOTE",
+      "sensor": "MB_U73_THERM_REMOTE",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "MB_U72_THERM_LOCAL",
+      "sensor": "MB_U72_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "MB_U72_THERM_REMOTE",
+      "sensor": "MB_U72_THERM_REMOTE",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "MB_U402_THERM_LOCAL",
+      "sensor": "MB_U402_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "MB_U19_THERM_LOCAL",
+      "sensor": "MB_U19_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "SLED1_THERM_LOCAL",
+      "sensor": "SLED1_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "SLED2_THERM_LOCAL",
+      "sensor": "SLED2_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "SLED3_THERM_LOCAL",
+      "sensor": "SLED3_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "SLED4_THERM_LOCAL",
+      "sensor": "SLED4_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "SLED5_THERM_LOCAL",
+      "sensor": "SLED5_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "SLED6_THERM_LOCAL",
+      "sensor": "SLED6_THERM_LOCAL",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "below_critical_threshold:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 0.0,
+        "threshold": 0.0,
+        "threshold_type": "lower_critical",
+        "bound": "lower"
+      }
+    },
+    {
+      "point": "IMON_FAN2",
+      "sensor": "IMON_FAN2",
+      "axiom": "BOUNDEDNESS",
+      "problem_type": "threshold_warning:reading",
+      "confidence": 1.0,
+      "boundary": "engine-side evidence only; production attestation records are v0.2",
+      "measurement": {
+        "indicator": "reading",
+        "value": 14.55,
+        "threshold": 10.0,
+        "threshold_type": "warning",
+        "bound": "upper"
+      }
+    }
+  ],
+  "unattested": [],
+  "unread_feeds": []
+}

@@ -25,7 +25,7 @@ from .certificate import (CertificateError, build_certificate,
 from .coverage import CoverageError, load_coverage
 from .identity import IdentityError, load_identity
 from .render import RenderError, render_pdf
-from .verify import VerificationError, verify_projection
+from .verify import VerificationError, verify_document
 
 EXIT_CLEAN, EXIT_RECORDED, EXIT_INCOMPLETE = 0, 1, 2
 
@@ -94,16 +94,25 @@ def _render(args: argparse.Namespace) -> int:
 
 def _verify(args: argparse.Namespace) -> int:
     try:
-        unbacked = verify_projection(args.certificate, args.pdf)
+        found = verify_document(args.certificate, args.pdf)
     except VerificationError as error:
         print(f"could not check the projection: {error}", file=sys.stderr)
         return EXIT_INCOMPLETE
 
-    if unbacked:
+    if found["unbacked"]:
         print("numbers on the page that are not in the record: "
-              + ", ".join(unbacked), file=sys.stderr)
+              + ", ".join(found["unbacked"]), file=sys.stderr)
+    if found["missing"]:
+        # Named, every one: the statement a page drops is the one it was for.
+        print(f"in the record and on no page ({len(found['missing'])}): "
+              + "; ".join(found["missing"]), file=sys.stderr)
+    for problem in found["page_lines"]:
+        print(problem, file=sys.stderr)
+    if found["unbacked"] or found["missing"] or found["page_lines"]:
         return EXIT_RECORDED
-    print("every number on the page appears in the record")
+    print(f"every number on the page appears in the record, and everything the "
+          f"record must show is on the page -- {found['pages']} page(s), each "
+          f"saying which it is")
     return EXIT_CLEAN
 
 

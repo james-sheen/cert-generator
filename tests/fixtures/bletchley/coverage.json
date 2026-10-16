@@ -1,0 +1,795 @@
+{
+  "format": "presence-audit/report/2",
+  "target": "walk_qemu_bletchley.json",
+  "walk_complete": true,
+  "absence_findings_withheld": false,
+  "counts": {
+    "declared": 86,
+    "matched": 28,
+    "reading": 28,
+    "present_not_reading": 0,
+    "declared_absent": 58,
+    "undeclared_present": 0,
+    "not_a_sensor": 6,
+    "unrecognised_type": 0,
+    "findings": 86,
+    "regressions": 58
+  },
+  "exit_code": 1,
+  "findings": [
+    {
+      "kind": "declared_absent",
+      "point": "FAN0_TACH_IL",
+      "sensor": "FAN0_TACH_IL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN0_TACH_OL",
+      "sensor": "FAN0_TACH_OL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN1_TACH_IL",
+      "sensor": "FAN1_TACH_IL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN1_TACH_OL",
+      "sensor": "FAN1_TACH_OL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN2_TACH_IL",
+      "sensor": "FAN2_TACH_IL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN2_TACH_OL",
+      "sensor": "FAN2_TACH_OL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN3_TACH_IL",
+      "sensor": "FAN3_TACH_IL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FAN3_TACH_OL",
+      "sensor": "FAN3_TACH_OL",
+      "detail": "declared by AspeedFan in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_chassis.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FRONT_PANEL_HUMIDTY",
+      "sensor": "FRONT_PANEL_HUMIDTY",
+      "detail": "declared by HDC1080 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_frontpanel.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FRONT_PANEL_HUMIDTY",
+      "sensor": "FRONT_PANEL_HUMIDTY",
+      "detail": "declared by SI7020 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_frontpanel.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FRONT_PANEL_TEMP",
+      "sensor": "FRONT_PANEL_TEMP",
+      "detail": "declared by HDC1080 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_frontpanel.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "FRONT_PANEL_TEMP",
+      "sensor": "FRONT_PANEL_TEMP",
+      "detail": "declared by SI7020 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_frontpanel.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "P12V_AUX_HSC:iout1",
+      "sensor": "P12V_AUX_HSC:iout1",
+      "detail": "declared by ADM1278 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "P12V_AUX_HSC:pin",
+      "sensor": "P12V_AUX_HSC:pin",
+      "detail": "declared by ADM1278 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "P12V_AUX_HSC:vin",
+      "sensor": "P12V_AUX_HSC:vin",
+      "detail": "declared by ADM1278 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "P12V_AUX_HSC:vout1",
+      "sensor": "P12V_AUX_HSC:vout1",
+      "detail": "declared by ADM1278 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_HSC:iout1",
+      "sensor": "SLED1_HSC:iout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_HSC:pin",
+      "sensor": "SLED1_HSC:pin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_HSC:vin",
+      "sensor": "SLED1_HSC:vin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_HSC:vout1",
+      "sensor": "SLED1_HSC:vout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_INA230:curr1",
+      "sensor": "SLED1_INA230:curr1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_INA230:in1",
+      "sensor": "SLED1_INA230:in1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED1_INA230:power1",
+      "sensor": "SLED1_INA230:power1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_HSC:iout1",
+      "sensor": "SLED2_HSC:iout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_HSC:pin",
+      "sensor": "SLED2_HSC:pin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_HSC:vin",
+      "sensor": "SLED2_HSC:vin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_HSC:vout1",
+      "sensor": "SLED2_HSC:vout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_INA230:curr1",
+      "sensor": "SLED2_INA230:curr1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_INA230:in1",
+      "sensor": "SLED2_INA230:in1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED2_INA230:power1",
+      "sensor": "SLED2_INA230:power1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_HSC:iout1",
+      "sensor": "SLED3_HSC:iout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_HSC:pin",
+      "sensor": "SLED3_HSC:pin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_HSC:vin",
+      "sensor": "SLED3_HSC:vin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_HSC:vout1",
+      "sensor": "SLED3_HSC:vout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_INA230:curr1",
+      "sensor": "SLED3_INA230:curr1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_INA230:in1",
+      "sensor": "SLED3_INA230:in1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED3_INA230:power1",
+      "sensor": "SLED3_INA230:power1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_HSC:iout1",
+      "sensor": "SLED4_HSC:iout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_HSC:pin",
+      "sensor": "SLED4_HSC:pin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_HSC:vin",
+      "sensor": "SLED4_HSC:vin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_HSC:vout1",
+      "sensor": "SLED4_HSC:vout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_INA230:curr1",
+      "sensor": "SLED4_INA230:curr1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_INA230:in1",
+      "sensor": "SLED4_INA230:in1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED4_INA230:power1",
+      "sensor": "SLED4_INA230:power1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_HSC:iout1",
+      "sensor": "SLED5_HSC:iout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_HSC:pin",
+      "sensor": "SLED5_HSC:pin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_HSC:vin",
+      "sensor": "SLED5_HSC:vin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_HSC:vout1",
+      "sensor": "SLED5_HSC:vout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_INA230:curr1",
+      "sensor": "SLED5_INA230:curr1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_INA230:in1",
+      "sensor": "SLED5_INA230:in1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED5_INA230:power1",
+      "sensor": "SLED5_INA230:power1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_HSC:iout1",
+      "sensor": "SLED6_HSC:iout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_HSC:pin",
+      "sensor": "SLED6_HSC:pin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_HSC:vin",
+      "sensor": "SLED6_HSC:vin",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_HSC:vout1",
+      "sensor": "SLED6_HSC:vout1",
+      "detail": "declared by MP5023 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_INA230:curr1",
+      "sensor": "SLED6_INA230:curr1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_INA230:in1",
+      "sensor": "SLED6_INA230:in1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "declared_absent",
+      "point": "SLED6_INA230:power1",
+      "sensor": "SLED6_INA230:power1",
+      "detail": "declared by INA230 in the declaration and not present in the capture at all",
+      "regression": true,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": null
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "IMON_FAN0",
+      "sensor": "IMON_FAN0",
+      "detail": "matched to captured point 'IMON FAN0' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_IMON_FAN0"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "IMON_FAN1",
+      "sensor": "IMON_FAN1",
+      "detail": "matched to captured point 'IMON FAN1' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_IMON_FAN1"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "IMON_FAN2",
+      "sensor": "IMON_FAN2",
+      "detail": "matched to captured point 'IMON FAN2' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_IMON_FAN2"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "IMON_FAN3",
+      "sensor": "IMON_FAN3",
+      "detail": "matched to captured point 'IMON FAN3' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_IMON_FAN3"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "MB_U19_THERM_LOCAL",
+      "sensor": "MB_U19_THERM_LOCAL",
+      "detail": "matched to captured point 'MB U19 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_MB_U19_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "MB_U402_THERM_LOCAL",
+      "sensor": "MB_U402_THERM_LOCAL",
+      "detail": "matched to captured point 'MB U402 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_MB_U402_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "MB_U72_THERM_LOCAL",
+      "sensor": "MB_U72_THERM_LOCAL",
+      "detail": "matched to captured point 'MB U72 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_MB_U72_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "MB_U72_THERM_REMOTE",
+      "sensor": "MB_U72_THERM_REMOTE",
+      "detail": "matched to captured point 'MB U72 THERM REMOTE' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_MB_U72_THERM_REMOTE"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "MB_U73_THERM_LOCAL",
+      "sensor": "MB_U73_THERM_LOCAL",
+      "detail": "matched to captured point 'MB U73 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_MB_U73_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "MB_U73_THERM_REMOTE",
+      "sensor": "MB_U73_THERM_REMOTE",
+      "detail": "matched to captured point 'MB U73 THERM REMOTE' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_MB_U73_THERM_REMOTE"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P12V_AUX",
+      "sensor": "P12V_AUX",
+      "detail": "matched to captured point 'P12V AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P12V_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P12V_FAN0",
+      "sensor": "P12V_FAN0",
+      "detail": "matched to captured point 'P12V FAN0' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P12V_FAN0"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P12V_FAN1",
+      "sensor": "P12V_FAN1",
+      "detail": "matched to captured point 'P12V FAN1' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P12V_FAN1"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P12V_FAN2",
+      "sensor": "P12V_FAN2",
+      "detail": "matched to captured point 'P12V FAN2' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P12V_FAN2"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P12V_FAN3",
+      "sensor": "P12V_FAN3",
+      "detail": "matched to captured point 'P12V FAN3' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P12V_FAN3"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P1V0_AUX",
+      "sensor": "P1V0_AUX",
+      "detail": "matched to captured point 'P1V0 AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P1V0_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P1V2_AUX",
+      "sensor": "P1V2_AUX",
+      "detail": "matched to captured point 'P1V2 AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P1V2_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P1V8_AUX",
+      "sensor": "P1V8_AUX",
+      "detail": "matched to captured point 'P1V8 AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P1V8_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P2V5_AUX",
+      "sensor": "P2V5_AUX",
+      "detail": "matched to captured point 'P2V5 AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P2V5_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P3V3_AUX",
+      "sensor": "P3V3_AUX",
+      "detail": "matched to captured point 'P3V3 AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P3V3_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P3V_BAT",
+      "sensor": "P3V_BAT",
+      "detail": "matched to captured point 'P3V BAT' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P3V_BAT"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "P5V_AUX",
+      "sensor": "P5V_AUX",
+      "detail": "matched to captured point 'P5V AUX' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/voltage_P5V_AUX"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "SLED1_THERM_LOCAL",
+      "sensor": "SLED1_THERM_LOCAL",
+      "detail": "matched to captured point 'SLED1 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_SLED1_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "SLED2_THERM_LOCAL",
+      "sensor": "SLED2_THERM_LOCAL",
+      "detail": "matched to captured point 'SLED2 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_SLED2_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "SLED3_THERM_LOCAL",
+      "sensor": "SLED3_THERM_LOCAL",
+      "detail": "matched to captured point 'SLED3 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_SLED3_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "SLED4_THERM_LOCAL",
+      "sensor": "SLED4_THERM_LOCAL",
+      "detail": "matched to captured point 'SLED4 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_SLED4_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "SLED5_THERM_LOCAL",
+      "sensor": "SLED5_THERM_LOCAL",
+      "detail": "matched to captured point 'SLED5 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_SLED5_THERM_LOCAL"
+    },
+    {
+      "kind": "matched_inexactly",
+      "point": "SLED6_THERM_LOCAL",
+      "sensor": "SLED6_THERM_LOCAL",
+      "detail": "matched to captured point 'SLED6 THERM LOCAL' by normalised, not by an exact name; confirm the pairing before trusting its findings",
+      "regression": false,
+      "declared_in": "upstream/meta/bletchley/bletchley_baseboard.json",
+      "live_path": "/redfish/v1/Chassis/Bletchley_Baseboard/Sensors/temperature_SLED6_THERM_LOCAL"
+    }
+  ]
+}

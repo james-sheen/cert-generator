@@ -3,8 +3,19 @@
 Render a QC certificate from a [`bmc-sensor-audit`](https://github.com/james-sheen/bmc-sensor-audit)
 attestation.
 
-**Released — 0.2.5**, tagged `v0.2.5`, Apache-2.0, on PyPI as
+**Released — 0.2.6**, tagged `v0.2.6`, Apache-2.0, on PyPI as
 `odm-cert-generator`.
+
+**0.2.6 prints the whole record, on as many pages as it needs.** 0.2.5 kept a
+certificate to one page with page breaks off, so that one which overflowed would
+show it, and it did not show. With 26 findings the library drew everything after the
+second measurement below the page's bottom edge, where no viewer or printer shows
+anything: *Not part of this judgment*, all 58 declared sensors that were absent, the
+capture handle. On paper the certificate listed the findings and never said *absent*,
+and `verify` passed it, because it asked only whether the page added to the record.
+Now every section prints in full, each page names the unit and its page number, page
+one states declared against absent beside the scope, and `verify` also requires what
+the record must show on a page, reading only what is drawn inside each one.
 
 **0.2.5 reads an attestation that names its subject `point`.** `presence-audit`
 0.1.13 renamed the core's subject, and a producer that has moved writes format 2,
@@ -141,6 +152,15 @@ other without trusting this code:
 cert-generator verify --certificate certificate.json --pdf certificate.pdf
 ```
 
+**It checks the other direction too: the page must carry what the record says.**
+The unit, the scope, every finding and decline, every declared sensor that was
+absent, the engine's boundary and the capture handle must each appear on a page,
+and `verify` names any that do not. It reads every page, and only what is drawn
+inside it. The page's own line -- *page 2 of 3* -- is layout rather than data, so
+it is checked against the document it is in instead of the record. Until 0.2.6 only
+the first direction was checked, and a certificate whose page had lost all of that
+passed.
+
 Shipped rather than kept in a CI script, for the same reason the audit tool ships
 its attestation validator: the person who *receives* the document is the one who
 needs to check it.
@@ -249,9 +269,12 @@ the field that is not on it.
 - **Nothing here re-audits the machine.** `verify` proves the page matches the
   record. The record's authority comes from the attestation, and the
   attestation's from the engine.
-- **One page.** Automatic page breaks are off on purpose, so a certificate that
-  overflows is visible as overflow rather than quietly paginated. A unit with very
-  many findings will need the JSON.
+- **As many pages as the record needs.** Each page names the unit and says which
+  page of how many it is, so a page parted from the rest still says which
+  certificate it belongs to, and page one carries the scope and declared against
+  absent. Up to 0.2.5 it was one page with page breaks off, meant to make overflow
+  visible; the overflow was drawn below the page's edge instead, where nothing
+  shows it.
 
 ## Where it sits
 
